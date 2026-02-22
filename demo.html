@@ -485,12 +485,12 @@
     <div class="container">
         <header>
             <div class="logo">Book My Walks</div>
-            <p class="tagline" data-config="slogan">Your reliable dog walker booking plugin</p>
+            <p class="tagline" data-config="slogan">booking and reviews for the independent walker</p>
         </header>
         
         <div class="tab-switcher">
             <button class="tab-btn active" onclick="switchTab('book')">Book a Walk</button>
-            <button class="tab-btn" onclick="switchTab('dashboard')">Walker Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('dashboard')">Reviews & Stats</button>
         </div>
         
         <!-- Booking View -->
@@ -498,7 +498,7 @@
             <!-- Step 1: Service -->
             <div id="step1" class="form-step">
                 <div class="card">
-                    <div class="card-title">🐕 What does your pup need?</div>
+                    <div class="card-title">What does your pup need?</div>
                     <div class="service-options">
                         <label class="service-option selected" onclick="selectService(this)">
                             <input type="radio" name="service" value="30min" checked>
@@ -526,13 +526,13 @@
                         </label>
                     </div>
                 </div>
-                <button type="button" class="submit-btn" onclick="nextStep(2)">Next: Pick a Time ➡️</button>
+                <button type="button" class="submit-btn" onclick="nextStep(2)">Next: Pick a Time</button>
             </div>
             
             <!-- Step 2: Date & Time -->
             <div id="step2" class="form-step hidden">
                 <div class="card">
-                    <div class="card-title">📅 When should <span data-walker>George</span> come by?</div>
+                    <div class="card-title">When should <span data-walker>George</span> come by?</div>
                     <div class="form-group">
                         <label>Date</label>
                         <input type="date" id="bookingDate" required>
@@ -544,15 +544,15 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <button type="button" class="submit-btn" style="flex: 1; background: #666;" onclick="nextStep(1)">⬅️ Back</button>
-                    <button type="button" class="submit-btn" style="flex: 1;" onclick="nextStep(3)">Next: You & Your Pup ➡️</button>
+                    <button type="button" class="submit-btn" style="flex: 1; background: #666;" onclick="nextStep(1)">Back</button>
+                    <button type="button" class="submit-btn" style="flex: 1;" onclick="nextStep(3)">Next: You & Your Pup</button>
                 </div>
             </div>
             
             <!-- Step 3: You & Your Dog -->
             <div id="step3" class="form-step hidden">
                 <div class="card">
-                    <div class="card-title">🐶 Tell <span data-walker>George</span> about yourself & your pup</div>
+                    <div class="card-title">Tell us about yourself & your pup</div>
                     <div class="form-group">
                         <label>Your Name *</label>
                         <input type="text" id="ownerName" required placeholder="Your name">
@@ -602,24 +602,24 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <button type="button" class="submit-btn" style="flex: 1; background: #666;" onclick="nextStep(2)">⬅️ Back</button>
-                    <button type="button" class="submit-btn" style="flex: 1;" onclick="nextStep(4)">Next: Payment ➡️</button>
+                    <button type="button" class="submit-btn" style="flex: 1; background: #666;" onclick="nextStep(2)">Back</button>
+                    <button type="button" class="submit-btn" style="flex: 1;" onclick="nextStep(4)">Next: Payment</button>
                 </div>
             </div>
             
             <!-- Step 4: Payment -->
             <div id="step4" class="form-step hidden">
                 <div class="card">
-                    <div class="card-title">💳 How will you pay <span data-walker>George</span>?</div>
+                    <div class="card-title">How will you pay <span data-walker>George</span>?</div>
                     <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px;">Pay directly to <span data-walker>George</span> when the walk is done. No upfront payment needed!</p>
                     <div class="payment-info">
-                        <div class="payment-title">💰 Payment Options</div>
+                        <div class="payment-title">Payment Options</div>
                         <div class="payment-options" id="paymentOptions"></div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <button type="button" class="submit-btn" style="flex: 1; background: #666;" onclick="nextStep(3)">⬅️ Back</button>
-                    <button type="button" class="submit-btn" style="flex: 1;" onclick="submitBooking()">📨 Request Booking</button>
+                    <button type="button" class="submit-btn" style="flex: 1; background: #666;" onclick="nextStep(3)">Back</button>
+                    <button type="button" class="submit-btn" style="flex: 1;" onclick="submitBooking()">Request Booking</button>
                 </div>
             </div>
             
@@ -627,14 +627,14 @@
             <div id="successView" class="hidden">
                 <div class="card">
                     <div style="text-align: center; padding: 40px 20px;">
-                        <div style="font-size: 4rem; margin-bottom: 16px;">🎉</div>
+                        <div style="font-size: 4rem; margin-bottom: 16px;">&mdash;</div>
                         <div class="success-title">You're all set!</div>
-                        <p class="success-text" style="margin-top: 16px;"><span data-walker>George</span> will text you at <span id="confirmPhone"></span> to confirm your booking or chat about any timing changes. Can't wait to meet your pup! 🐕</p>
+                        <p class="success-text" style="margin-top: 16px;"><span data-walker>George</span> will text you at <span id="confirmPhone"></span> to confirm your booking or chat about any timing changes. Can't wait to meet your pup!</p>
                         
                         <!-- Demo CTA - only show in demo mode -->
                         <div id="demoCTA" style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
                             <p style="font-weight: 600; margin-bottom: 16px;">Like what you see?</p>
-                            <a href="build.html" class="submit-btn" style="display: block; text-decoration: none;">Build for Your Business →</a>
+                            <a href="build.html" class="submit-btn" style="display: block; text-decoration: none;">Build for Your Business</a>
                         </div>
                         
                         <button class="submit-btn" style="margin-top: 24px; background: transparent; border-color: var(--border); color: var(--text);" onclick="resetForm()">Book Another Walk</button>
@@ -656,12 +656,17 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="paidBookings">0</div>
-                    <div class="stat-label">Paid</div>
+                    <div class="stat-label">Completed</div>
                 </div>
             </div>
             
             <div class="card">
-                <div class="card-title">📋 Upcoming Bookings</div>
+                <div class="card-title">Reviews & Stats</div>
+                <div id="reviewsList"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Upcoming Bookings</div>
                 <div id="bookingsList"></div>
             </div>
             
@@ -676,7 +681,7 @@
         // Business Configuration - Loaded from localStorage or defaults
         const defaultConfig = {
             businessName: 'Book My Walks',
-            slogan: 'Your reliable dog walker booking plugin',
+            slogan: 'booking and reviews for the independent walker',
             walkerName: 'George',
             services: [
                 { id: '30min', name: '30-Minute Walk', price: '$25', duration: 30 },
@@ -1036,9 +1041,21 @@
             generateTimeSlots();
         }
         
+        // Reviews - stored in localStorage or defaults
+        const defaultReviews = [
+            { name: 'Sarah M.', rating: 5, text: 'Best walker ever! My pup loves walks with George.', date: '2026-02-15' },
+            { name: 'Mike T.', rating: 5, text: 'Super reliable and friendly. Highly recommend!', date: '2026-02-10' }
+        ];
+        
+        function getReviews() {
+            const data = localStorage.getItem('bmw_reviews');
+            return data ? JSON.parse(data) : defaultReviews;
+        }
+        
         // Load dashboard
         function loadDashboard() {
             const bookings = getBookings();
+            const reviews = getReviews();
             
             // Sort by date
             bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -1048,13 +1065,30 @@
             document.getElementById('pendingBookings').textContent = bookings.filter(b => b.status === 'pending').length;
             document.getElementById('paidBookings').textContent = bookings.filter(b => b.status === 'paid').length;
             
+            // Reviews
+            const reviewsList = document.getElementById('reviewsList');
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p style="color: var(--text-light);">No reviews yet</p>';
+            } else {
+                reviewsList.innerHTML = reviews.map(r => `
+                    <div style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <strong>${r.name}</strong>
+                            <span style="color: #F39C12;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 4px;">${r.text}</p>
+                        <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 4px;">${r.date}</p>
+                    </div>
+                `).join('');
+            }
+            
             // Bookings list
             const list = document.getElementById('bookingsList');
             
             if (bookings.length === 0) {
                 list.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">🐕</div>
+                        <div class="empty-icon">&mdash;</div>
                         <p>No bookings yet</p>
                     </div>
                 `;
@@ -1065,19 +1099,19 @@
                 <div class="booking-card">
                     <div class="booking-header">
                         <span class="booking-service">${serviceNames[booking.service]} - ${servicePrices[booking.service]}</span>
-                        <span class="booking-status ${booking.status}">${booking.status === 'pending' ? '⏳ Pending' : '✅ Paid'}</span>
+                        <span class="booking-status ${booking.status}">${booking.status === 'pending' ? 'Pending' : 'Paid'}</span>
                     </div>
                     <div class="booking-details">
-                        <div>📅 ${booking.date} at ${booking.time}</div>
-                        <div>🐕 ${booking.dog.name} ${booking.dog.breed ? `(${booking.dog.breed})` : ''}</div>
+                        <div>${booking.date} at ${booking.time}</div>
+                        <div>${booking.dog.name} ${booking.dog.breed ? `(${booking.dog.breed})` : ''}</div>
                         ${booking.dog.photo ? `<div class="booking-dog-photo">${booking.dog.photo}</div>` : ''}
-                        <div>👤 ${booking.owner.name} - ${booking.owner.phone}</div>
-                        <div>📍 ${booking.owner.address}</div>
-                        ${booking.dog.notes ? `<div>📝 Notes: ${booking.dog.notes}</div>` : ''}
+                        <div>${booking.owner.name} - ${booking.owner.phone}</div>
+                        <div>${booking.owner.address}</div>
+                        ${booking.dog.notes ? `<div>Notes: ${booking.dog.notes}</div>` : ''}
                     </div>
                     <div class="booking-actions">
-                        ${booking.status === 'pending' ? `<button class="booking-btn mark-paid" onclick="markPaid(${booking.id})">✅ Mark Paid</button>` : ''}
-                        <button class="booking-btn cancel" onclick="cancelBooking(${booking.id})">❌ Cancel</button>
+                        ${booking.status === 'pending' ? `<button class="booking-btn mark-paid" onclick="markPaid(${booking.id})">Mark Paid</button>` : ''}
+                        <button class="booking-btn cancel" onclick="cancelBooking(${booking.id})">Cancel</button>
                     </div>
                 </div>
             `).join('');
