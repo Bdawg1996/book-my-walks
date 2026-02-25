@@ -10,7 +10,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             /* Brand Config - Override these in your site */
@@ -703,6 +706,38 @@
         if (savedConfig) {
             config = { ...defaultConfig, ...JSON.parse(savedConfig) };
         }
+
+        // Supabase Configuration
+        const supabaseUrl = 'https://vvwomrovsqxfajrlsrfi.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2d29tcm92c3F4ZmFqcmxzcmZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgxOTYwMDAsImV4cCI6MjA1Mzc3MjAwMH0.M9jR2N8U1S8nEWN7nP7oZqJYlL7j8rK9YmNvP5xQ3GY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Function to save booking to Supabase
+        async function saveBookingToSupabase(booking) {
+            try {
+                const { data, error } = await supabase
+                    .from('bookings')
+                    .insert([{
+                        client_name: booking.owner.name,
+                        client_email: booking.owner.email,
+                        client_phone: booking.owner.phone,
+                        dog_name: booking.dog.name,
+                        dog_breed: booking.dog.breed,
+                        service_type: booking.service,
+                        booking_date: booking.date,
+                        booking_time: booking.time,
+                        status: 'pending'
+                    }]);
+                
+                if (error) throw error;
+                console.log('Booking saved to Supabase:', data);
+                return data;
+            } catch (err) {
+                console.error('Supabase error:', err);
+                // Continue with local storage as fallback
+                return null;
+            }
+        }
         
         // Apply config to page
         function applyConfig() {
@@ -983,7 +1018,7 @@
         }
         
         // Submit booking
-        function submitBooking() {
+        async function submitBooking() {
             const booking = {
                 service: document.querySelector('input[name="service"]:checked').value,
                 date: document.getElementById('bookingDate').value,
@@ -1004,14 +1039,17 @@
                 }
             };
             
+            // Save to local storage (for demo)
             saveBooking(booking);
+            
+            // Save to Supabase (for production)
+            await saveBookingToSupabase(booking);
             
             // Show success - hide all steps, show success
             document.querySelectorAll('.form-step').forEach(el => el.classList.add('hidden'));
             document.getElementById('confirmPhone').textContent = document.getElementById('ownerPhone').value;
             document.getElementById('successView').classList.remove('hidden');
             
-            // In production, this would send an email
             console.log('Booking submitted:', booking);
         }
         
