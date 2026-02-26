@@ -535,7 +535,7 @@
             <!-- Step 2: Date & Time -->
             <div id="step2" class="form-step hidden">
                 <div class="card">
-                    <div class="card-title">When should <span data-walker>George</span> come by?</div>
+                    <div class="card-title">When should <span data-walker>[Walker Name]</span> come by?</div>
                     <div class="form-group">
                         <label>Date</label>
                         <input type="date" id="bookingDate" required>
@@ -613,8 +613,8 @@
             <!-- Step 4: Payment -->
             <div id="step4" class="form-step hidden">
                 <div class="card">
-                    <div class="card-title">How will you pay <span data-walker>George</span>?</div>
-                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px;">Pay directly to <span data-walker>George</span> when the walk is done. No upfront payment needed!</p>
+                    <div class="card-title">How will you pay <span data-walker>[Walker Name]</span>?</div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px;">Pay directly to <span data-walker>[Walker Name]</span> when the walk is done. No upfront payment needed!</p>
                     <div class="payment-info">
                         <div class="payment-title">Payment Options</div>
                         <div class="payment-options" id="paymentOptions"></div>
@@ -632,7 +632,7 @@
                     <div style="text-align: center; padding: 40px 20px;">
                         <div style="font-size: 4rem; margin-bottom: 16px;">&mdash;</div>
                         <div class="success-title">You're all set!</div>
-                        <p class="success-text" style="margin-top: 16px;"><span data-walker>George</span> will text you at <span id="confirmPhone"></span> to confirm your booking or chat about any timing changes. Can't wait to meet your pup!</p>
+                        <p class="success-text" style="margin-top: 16px;"><span data-walker>[Walker Name]</span> will text you at <span id="confirmPhone"></span> to confirm your booking or chat about any timing changes. Can't wait to meet your pup!</p>
                         
                         <!-- Demo CTA - only show in demo mode -->
                         <div id="demoCTA" style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
@@ -692,8 +692,8 @@
                 { id: '2hr', name: '2-Hour Adventure', price: '$75', duration: 120 }
             ],
             payment: {
-                venmo: '@yourvenmo',
-                zelle: 'your@email.com',
+                venmo: '@demo-walker',
+                zelle: 'walker@demo.com',
                 applePay: '(555) 123-4567',
                 cash: true
             },
