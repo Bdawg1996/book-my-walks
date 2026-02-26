@@ -710,12 +710,12 @@
         // Supabase Configuration
         const supabaseUrl = 'https://vvwomrovsqxfajrlsrfi.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2d29tcm92c3F4ZmFqcmxzcmZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgxOTYwMDAsImV4cCI6MjA1Mzc3MjAwMH0.M9jR2N8U1S8nEWN7nP7oZqJYlL7j8rK9YmNvP5xQ3GY';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // Function to save booking to Supabase
         async function saveBookingToSupabase(booking) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('bookings')
                     .insert([{
                         client_name: booking.owner.name,
