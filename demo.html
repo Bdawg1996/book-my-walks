@@ -683,18 +683,18 @@
         
         // Business Configuration - Loaded from localStorage or defaults
         const defaultConfig = {
-            businessName: 'Book My Walks',
-            slogan: 'booking and reviews for the independent walker',
-            walkerName: 'George',
+            businessName: 'Your Business Name',
+            slogan: 'Professional dog walking services in your neighborhood',
+            walkerName: '[Walker Name]',
             services: [
                 { id: '30min', name: '30-Minute Walk', price: '$25', duration: 30 },
                 { id: '60min', name: '1-Hour Walk', price: '$40', duration: 60 },
                 { id: '2hr', name: '2-Hour Adventure', price: '$75', duration: 120 }
             ],
             payment: {
-                venmo: '@georgexmeta',
-                zelle: 'George Tinoco (415) 324-0599',
-                applePay: '(415) 324-0599',
+                venmo: '@yourvenmo',
+                zelle: 'your@email.com',
+                applePay: '(555) 123-4567',
                 cash: true
             },
             hours: { start: 7, end: 19 }
@@ -959,9 +959,9 @@
                 }
             });
             
-            // Generate slots: just :00 slots, but skip if blocked
+            // Generate slots: 30-min increments, skip if blocked
             const slots = [];
-            for (let mins = 7 * 60; mins <= 19 * 60; mins += 60) {
+            for (let mins = 7 * 60; mins <= 19 * 60; mins += 30) {
                 // Only add the hour slot if it's not blocked
                 if (!blockedTimes.has(mins)) {
                     slots.push({ mins, type: 'hour' });
@@ -1081,7 +1081,7 @@
         
         // Reviews - stored in localStorage or defaults
         const defaultReviews = [
-            { name: 'Sarah M.', rating: 5, text: 'Best walker ever! My pup loves walks with George.', date: '2026-02-15' },
+            { name: 'Sarah M.', rating: 5, text: 'Best walker ever! My pup loves walks.', date: '2026-02-15' },
             { name: 'Mike T.', rating: 5, text: 'Super reliable and friendly. Highly recommend!', date: '2026-02-10' }
         ];
         
