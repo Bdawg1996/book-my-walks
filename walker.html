@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Walker | Book My Walks</title>
+    <meta name="theme-color" content="#000000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .header .slogan {
+            color: #888;
+        }
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .photo {
+            aspect-ratio: 1;
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        .photo.full {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+        .bio {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        .services {
+            margin: 30px 0;
+        }
+        .services h2 {
+            margin-bottom: 15px;
+        }
+        .service-card {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #4F46E5;
+        }
+        .book-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 30px 0;
+        }
+        .book-btn:hover {
+            background: #4338ca;
+        }
+        .payment {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .payment h3 {
+            margin-bottom: 15px;
+        }
+        .payment-method {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .payment-method:last-child {
+            border-bottom: none;
+        }
+        .payment-label {
+            color: #888;
+        }
+        .reviews {
+            margin: 30px 0;
+        }
+        .reviews h2 {
+            margin-bottom: 15px;
+        }
+        .review {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        .review-stars {
+            color: #FFD700;
+            margin-bottom: 8px;
+        }
+        .review-text {
+            color: #ccc;
+        }
+        .review-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+        .not-found {
+            text-align: center;
+            padding: 50px;
+        }
+        .not-found h2 {
+            margin-bottom: 10px;
+        }
+        .not-found a {
+            color: #4F46E5;
+        }
+        .signup-cta {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .signup-cta a {
+            color: #4F46E5;
+            font-weight: 600;
+        }
+        
+        /* Booking Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #0A0A0A;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #4F46E5;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .modal-btn.primary {
+            background: #4F46E5;
+            color: white;
+        }
+        .modal-btn.secondary {
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="loading">Loading...</div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal">
+            <h2>Book a Walk</h2>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="clientEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone *</label>
+                    <input type="tel" id="clientPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Dog's Name *</label>
+                    <input type="text" id="dogName" required>
+                </div>
+                <div class="form-group">
+                    <label>Dog's Breed</label>
+                    <input type="text" id="dogBreed">
+                </div>
+                <div class="form-group">
+                    <label>Service *</label>
+                    <select id="serviceType" required>
+                        <option value="">Select a service...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date *</label>
+                    <input type="date" id="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="notes" rows="2"></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="modal-btn primary">Request Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gzrbyinrtjbiaixngxkl.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6cmdieW5ydGpiaWF5eG54Z2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTk0MDQsImV4cCI6MjA4Nzc5NTQwNH0.enrQB_MIycWolpubETuMi9gl8-adoSCCd_eE7oOe2vI';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Get username from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('u');
+        
+        let walkerData = null;
+        
+        async function loadWalker() {
+            if (!username) {
+                showNotFound();
+                return;
+            }
+            
+            const { data, error } = await supabase
+                .from('walker_profiles')
+                .select('*')
+                .eq('username', username.toLowerCase())
+                .single();
+            
+            if (error || !data) {
+                showNotFound();
+                return;
+            }
+            
+            walkerData = data;
+            renderWalker(data);
+        }
+        
+        function showNotFound() {
+            document.getElementById('content').innerHTML = `
+                <div class="not-found">
+                    <h2>Walker Not Found</h2>
+                    <p>This page doesn't exist yet.</p>
+                    <div class="signup-cta">
+                        <p>Are you a dog walker?</p>
+                        <p><a href="/signup.html">Create your page →</a></p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderWalker(walker) {
+            const photos = [walker.photo1, walker.photo2, walker.photo3, walker.photo4].filter(Boolean);
+            
+            let photoHTML = '';
+            if (photos.length === 1) {
+                photoHTML = `<div class="photo full" style="background-image: url('${photos[0]}')"></div>`;
+            } else if (photos.length > 1) {
+                photoHTML = '<div class="photos">';
+                photos.slice(0, 4).forEach((p, i) => {
+                    photoHTML += `<div class="photo" style="background-image: url('${p}')"></div>`;
+                });
+                photoHTML += '</div>';
+            }
+            
+            let servicesHTML = '';
+            if (walker.service_30min_price) {
+                servicesHTML += `
+                    <div class="service-card">
+                        <span class="service-name">30-Minute Walk</span>
+                        <span class="service-price">${walker.service_30min_price}</span>
+                    </div>
+                `;
+            }
+            if (walker.service_60min_price) {
+                servicesHTML += `
+                    <div class="service-card">
+                        <span class="service-name">1-Hour Walk</span>
+                        <span class="service-price">${walker.service_60min_price}</span>
+                    </div>
+                `;
+            }
+            if (walker.service_2hr_price) {
+                servicesHTML += `
+                    <div class="service-card">
+                        <span class="service-name">2-Hour Adventure</span>
+                        <span class="service-price">${walker.service_2hr_price}</span>
+                    </div>
+                `;
+            }
+            
+            let paymentHTML = '';
+            if (walker.venmo || walker.zelle || walker.apple_pay || walker.accepts_cash) {
+                paymentHTML = '<div class="payment"><h3>💳 Payment Options</h3>';
+                if (walker.venmo) paymentHTML += `<div class="payment-method"><span class="payment-label">Venmo</span><span>${walker.venmo}</span></div>`;
+                if (walker.zelle) paymentHTML += `<div class="payment-method"><span class="payment-label">Zelle</span><span>${walker.zelle}</span></div>`;
+                if (walker.apple_pay) paymentHTML += `<div class="payment-method"><span class="payment-label">Apple Pay</span><span>${walker.apple_pay}</span></div>`;
+                if (walker.accepts_cash) paymentHTML += `<div class="payment-method"><span class="payment-label">Cash</span><span>✅ Accepted</span></div>`;
+                paymentHTML += '</div>';
+            }
+            
+            // Load reviews
+            loadReviews(walker.id);
+            
+            document.getElementById('content').innerHTML = `
+                <div class="header">
+                    <h1>${walker.full_name}</h1>
+                    <p class="slogan">${walker.bio || 'Professional dog walking services'}</p>
+                </div>
+                ${photoHTML}
+                ${paymentHTML}
+                <div class="services">
+                    <h2>Services</h2>
+                    ${servicesHTML}
+                </div>
+                <button class="book-btn" onclick="openModal()">Book a Walk</button>
+                <div class="reviews" id="reviewsSection">
+                    <h2>⭐ Reviews</h2>
+                    <div id="reviewsList">Loading reviews...</div>
+                </div>
+                <div class="signup-cta">
+                    <p>Are you a dog walker?</p>
+                    <p><a href="/signup.html">Create your own page →</a></p>
+                </div>
+            `;
+            
+            // Populate service dropdown in modal
+            const serviceSelect = document.getElementById('serviceType');
+            if (walker.service_30min_price) serviceSelect.innerHTML += `<option value="30min">30-Minute Walk - ${walker.service_30min_price}</option>`;
+            if (walker.service_60min_price) serviceSelect.innerHTML += `<option value="60min">1-Hour Walk - ${walker.service_60min_price}</option>`;
+            if (walker.service_2hr_price) serviceSelect.innerHTML += `<option value="2hr">2-Hour Adventure - ${walker.service_2hr_price}</option>`;
+            
+            // Set min date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = today;
+        }
+        
+        async function loadReviews(walkerId) {
+            const { data } = await supabase
+                .from('walker_reviews')
+                .select('*')
+                .eq('walker_id', walkerId)
+                .order('created_at', { ascending: false });
+            
+            const reviewsList = document.getElementById('reviewsList');
+            if (!data || data.length === 0) {
+                reviewsList.innerHTML = '<p style="color:#666">No reviews yet.</p>';
+                return;
+            }
+            
+            reviewsList.innerHTML = data.map(r => `
+                <div class="review">
+                    <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                    <div class="review-text">${r.review_text || ''}</div>
+                    <div class="review-author">— ${r.client_name}</div>
+                </div>
+            `).join('');
+        }
+        
+        function openModal() {
+            document.getElementById('bookingModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+        
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const booking = {
+                walker_id: walkerData.id,
+                walker_username: walkerData.username,
+                walker_email: walkerData.email,
+                client_name: document.getElementById('clientName').value,
+                client_email: document.getElementById('clientEmail').value,
+                client_phone: document.getElementById('clientPhone').value,
+                dog_name: document.getElementById('dogName').value,
+                dog_breed: document.getElementById('dogBreed').value,
+                service_type: document.getElementById('serviceType').value,
+                booking_date: document.getElementById('bookingDate').value,
+                notes: document.getElementById('notes').value,
+                status: 'pending',
+                created_at: new Date().toISOString()
+            };
+            
+            // Save to Supabase
+            const { error } = await supabase.from('bookings').insert([booking]);
+            
+            if (error) {
+                alert('Error: ' + error.message);
+                return;
+            }
+            
+            // Send email notification
+            await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 're_SKd7r9UL_FczYCzvJMehcomvLDT4FZinE'
+                },
+                body: JSON.stringify({
+                    from: 'Book My Walks <noreply@bookmywalks.com>',
+                    to: walkerData.email,
+                    subject: `New Booking from ${booking.client_name}`,
+                    html: `
+                        <h2>New Booking Request!</h2>
+                        <p><strong>Client:</strong> ${booking.client_name}</p>
+                        <p><strong>Email:</strong> ${booking.client_email}</p>
+                        <p><strong>Phone:</strong> ${booking.client_phone}</p>
+                        <p><strong>Dog:</strong> ${booking.dog_name} ${booking.dog_breed ? `(${booking.dog_breed})` : ''}</p>
+                        <p><strong>Service:</strong> ${booking.service_type}</p>
+                        <p><strong>Date:</strong> ${booking.booking_date}</p>
+                        <p><strong>Notes:</strong> ${booking.notes || 'None'}</p>
+                    `
+                })
+            });
+            
+            alert('Booking request sent! The walker will contact you soon.');
+            closeModal();
+            document.getElementById('bookingForm').reset();
+        });
+        
+        loadWalker();
+    </script>
+</body>
+</html>

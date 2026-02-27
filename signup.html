@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walker Signup | Book My Walks</title>
+    <meta name="theme-color" content="#000000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ccc;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4F46E5;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .photo-input {
+            position: relative;
+        }
+        .photo-input input {
+            padding: 10px;
+        }
+        .photo-preview {
+            width: 100%;
+            height: 80px;
+            background: #1a1a1a;
+            border: 1px dashed #444;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            background-size: cover;
+            background-position: center;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .service-input input {
+            padding: 10px;
+            text-align: center;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background: #4338ca;
+        }
+        .submit-btn:disabled {
+            background: #333;
+            cursor: not-allowed;
+        }
+        .error {
+            background: #fee;
+            color: #c00;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .success {
+            background: #efe;
+            color: #060;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        .success a {
+            color: #4F46E5;
+            font-weight: 600;
+        }
+        .preview-link {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: none;
+        }
+        .preview-link a {
+            color: #4F46E5;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐕 Become a Walker</h1>
+        <p class="subtitle">Create your booking page at yourname.bookmywalks.com</p>
+        
+        <div class="error" id="error"></div>
+        <div class="success" id="success">
+            ✅ You're all set!<br><br>
+            Your page is live at:<br>
+            <a id="profileLink" href="#"></a>
+        </div>
+        
+        <form id="signupForm">
+            <div class="form-group">
+                <label>Username * (your URL will be username.bookmywalks.com)</label>
+                <input type="text" id="username" required pattern="[a-z0-9-]+" placeholder="e.g., john-dogwalker">
+                <small style="color: #666">Letters, numbers, and dashes only</small>
+            </div>
+            
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="fullName" required placeholder="John Smith">
+            </div>
+            
+            <div class="form-group">
+                <label>Email * (for booking notifications)</label>
+                <input type="email" id="email" required placeholder="john@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label>Bio</label>
+                <textarea id="bio" rows="3" placeholder="Tell clients about yourself..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Photos (paste image URLs)</label>
+                <div class="photo-grid">
+                    <div class="photo-input">
+                        <input type="url" id="photo1" placeholder="Photo 1 URL">
+                    </div>
+                    <div class="photo-input">
+                        <input type="url" id="photo2" placeholder="Photo 2 URL">
+                    </div>
+                    <div class="photo-input">
+                        <input type="url" id="photo3" placeholder="Photo 3 URL">
+                    </div>
+                    <div class="photo-input">
+                        <input type="url" id="photo4" placeholder="Photo 4 URL">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Service Prices</label>
+                <div class="services">
+                    <div class="service-input">
+                        <input type="text" id="price30" value="$25" placeholder="$25">
+                        <small style="display:block;text-align:center;color:#666">30 min</small>
+                    </div>
+                    <div class="service-input">
+                        <input type="text" id="price60" value="$40" placeholder="$40">
+                        <small style="display:block;text-align:center;color:#666">1 hour</small>
+                    </div>
+                    <div class="service-input">
+                        <input type="text" id="price2hr" value="$75" placeholder="$75">
+                        <small style="display:block;text-align:center;color:#666">2 hours</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Payment Info</label>
+                <input type="text" id="venmo" placeholder="Venmo @username">
+                <input type="text" id="zelle" placeholder="Zelle number/email" style="margin-top:8px">
+                <input type="text" id="applePay" placeholder="Apple Pay" style="margin-top:8px">
+                <label style="margin-top:10px">
+                    <input type="checkbox" id="acceptsCash" checked style="width:auto"> Accept cash
+                </label>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Create My Page</button>
+        </form>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://gzrbyinrtjbiaixngxkl.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6cmdieW5ydGpiaWF5eG54Z2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTk0MDQsImV4cCI6MjA4Nzc5NTQwNH0.enrQB_MIycWolpubETuMi9gl8-adoSCCd_eE7oOe2vI';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const error = document.getElementById('error');
+            const success = document.getElementById('success');
+            
+            btn.disabled = true;
+            btn.textContent = 'Creating...';
+            error.style.display = 'none';
+            
+            const username = document.getElementById('username').value.toLowerCase().trim();
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            try {
+                const { data, error: err } = await supabase
+                    .from('walker_profiles')
+                    .insert([{
+                        username: username,
+                        full_name: fullName,
+                        email: email,
+                        bio: document.getElementById('bio').value.trim() || null,
+                        photo1: document.getElementById('photo1').value.trim() || null,
+                        photo2: document.getElementById('photo2').value.trim() || null,
+                        photo3: document.getElementById('photo3').value.trim() || null,
+                        photo4: document.getElementById('photo4').value.trim() || null,
+                        venmo: document.getElementById('venmo').value.trim() || null,
+                        zelle: document.getElementById('zelle').value.trim() || null,
+                        apple_pay: document.getElementById('applePay').value.trim() || null,
+                        accepts_cash: document.getElementById('acceptsCash').checked,
+                        service_30min_price: document.getElementById('price30').value.trim() || '$25',
+                        service_60min_price: document.getElementById('price60').value.trim() || '$40',
+                        service_2hr_price: document.getElementById('price2hr').value.trim() || '$75'
+                    }]);
+                
+                if (err) throw err;
+                
+                document.getElementById('signupForm').style.display = 'none';
+                success.style.display = 'block';
+                document.getElementById('profileLink').href = '/' + username + '.html';
+                document.getElementById('profileLink').textContent = username + '.bookmywalks.com';
+                
+            } catch (err) {
+                error.style.display = 'block';
+                error.textContent = err.message || 'Something went wrong. Try again.';
+                btn.disabled = false;
+                btn.textContent = 'Create My Page';
+            }
+        });
+    </script>
+</body>
+</html>
