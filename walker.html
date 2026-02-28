@@ -303,9 +303,23 @@
         
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Get username from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const username = urlParams.get('u');
+        // Get username from subdomain or URL
+        const hostname = window.location.hostname;
+        let username = null;
+        
+        if (hostname.includes('bookmywalks.com')) {
+            // Extract subdomain (e.g., "bobby" from "bobby.bookmywalks.com")
+            const parts = hostname.split('.');
+            if (parts.length > 2 && parts[0] !== 'www') {
+                username = parts[0];
+            }
+        }
+        
+        // Fallback to query param ?u=username
+        if (!username) {
+            const urlParams = new URLSearchParams(window.location.search);
+            username = urlParams.get('u');
+        }
         
         let walkerData = null;
         
