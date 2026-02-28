@@ -338,18 +338,18 @@
                 .from('walker_profiles')
                 .select('*')
                 .eq('username', username.toLowerCase())
-                .single();
+                .limit(1);
             
             console.log('Query result:', data, error);
             
-            if (error || !data) {
+            if (error || !data || data.length === 0) {
                 console.log('Error or no data, showing not found');
                 showNotFound();
                 return;
             }
             
-            walkerData = data;
-            renderWalker(data);
+            walkerData = data[0];
+            renderWalker(data[0]);
         }
         
         function showNotFound() {
