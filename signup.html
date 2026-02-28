@@ -252,7 +252,7 @@
                 console.log('Submitting to Supabase...');
                 console.log('Username:', username);
                 
-                const { data, error: err } = await supabase
+                const { data, error: err } = await supabaseClient
                     .from('walker_profiles')
                     .insert([{
                         username: username,
