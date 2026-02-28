@@ -276,7 +276,7 @@
                 
                 document.getElementById('signupForm').style.display = 'none';
                 success.style.display = 'block';
-                document.getElementById('profileLink').href = '/' + username + '.html';
+                document.getElementById('profileLink').href = '/walker.html?u=' + username;
                 document.getElementById('profileLink').textContent = username + '.bookmywalks.com';
                 
             } catch (err) {
