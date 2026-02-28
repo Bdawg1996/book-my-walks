@@ -329,7 +329,7 @@
                 return;
             }
             
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('walker_profiles')
                 .select('*')
                 .eq('username', username.toLowerCase())
@@ -444,7 +444,7 @@
         }
         
         async function loadReviews(walkerId) {
-            const { data } = await supabase
+            const { data } = await supabaseClient
                 .from('walker_reviews')
                 .select('*')
                 .eq('walker_id', walkerId)
