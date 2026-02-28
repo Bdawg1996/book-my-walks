@@ -273,7 +273,10 @@
                     }]);
                 
                 console.log('Response:', data, err);
-                if (err) throw err;
+                if (err) {
+                    console.log('Error details:', err);
+                    throw err;
+                }
                 
                 document.getElementById('signupForm').style.display = 'none';
                 success.style.display = 'block';
