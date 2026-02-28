@@ -249,6 +249,9 @@
             const email = document.getElementById('email').value.trim();
             
             try {
+                console.log('Submitting to Supabase...');
+                console.log('Username:', username);
+                
                 const { data, error: err } = await supabase
                     .from('walker_profiles')
                     .insert([{
@@ -269,6 +272,7 @@
                         service_2hr_price: document.getElementById('price2hr').value.trim() || '$75'
                     }]);
                 
+                console.log('Response:', data, err);
                 if (err) throw err;
                 
                 document.getElementById('signupForm').style.display = 'none';
