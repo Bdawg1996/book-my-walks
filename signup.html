@@ -250,33 +250,38 @@
             
             try {
                 console.log('Submitting to Supabase...');
-                console.log('Username:', username);
+                console.log('Insert data:', {
+                    username: username,
+                    full_name: fullName,
+                    email: email
+                });
                 
-                const { data, error: err } = await supabaseClient
-                    .from('walker_profiles')
-                    .insert([{
-                        username: username,
-                        full_name: fullName,
-                        email: email,
-                        bio: document.getElementById('bio').value.trim() || null,
-                        photo1: document.getElementById('photo1').value.trim() || null,
-                        photo2: document.getElementById('photo2').value.trim() || null,
-                        photo3: document.getElementById('photo3').value.trim() || null,
-                        photo4: document.getElementById('photo4').value.trim() || null,
-                        venmo: document.getElementById('venmo').value.trim() || null,
-                        zelle: document.getElementById('zelle').value.trim() || null,
-                        apple_pay: document.getElementById('applePay').value.trim() || null,
-                        accepts_cash: document.getElementById('acceptsCash').checked,
-                        service_30min_price: document.getElementById('price30').value.trim() || '$25',
-                        service_60min_price: document.getElementById('price60').value.trim() || '$40',
-                        service_2hr_price: document.getElementById('price2hr').value.trim() || '$75'
-                    }]);
-                
-                console.log('Response:', data, err);
-                if (err) {
-                    console.log('Error details:', err);
-                    throw err;
-                }
+                try {
+                    const { data, error: err } = await supabaseClient
+                        .from('walker_profiles')
+                        .insert([{
+                            username: username,
+                            full_name: fullName,
+                            email: email,
+                            bio: document.getElementById('bio').value.trim() || null,
+                            photo1: document.getElementById('photo1').value.trim() || null,
+                            photo2: document.getElementById('photo2').value.trim() || null,
+                            photo3: document.getElementById('photo3').value.trim() || null,
+                            photo4: document.getElementById('photo4').value.trim() || null,
+                            venmo: document.getElementById('venmo').value.trim() || null,
+                            zelle: document.getElementById('zelle').value.trim() || null,
+                            apple_pay: document.getElementById('applePay').value.trim() || null,
+                            accepts_cash: document.getElementById('acceptsCash').checked,
+                            service_30min_price: document.getElementById('price30').value.trim() || '$25',
+                            service_60min_price: document.getElementById('price60').value.trim() || '$40',
+                            service_2hr_price: document.getElementById('price2hr').value.trim() || '$75'
+                        }]);
+                    
+                    console.log('Response:', data, err);
+                    if (err) {
+                        console.log('Error details:', JSON.stringify(err));
+                        throw err;
+                    }
                 
                 document.getElementById('signupForm').style.display = 'none';
                 success.style.display = 'block';
