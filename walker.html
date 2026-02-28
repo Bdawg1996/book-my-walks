@@ -301,7 +301,7 @@
         const SUPABASE_URL = 'https://gzrbyinrtjbiaixngxkl.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6cmdieW5ydGpiaWF5eG54Z2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTk0MDQsImV4cCI6MjA4Nzc5NTQwNH0.enrQB_MIycWolpubETuMi9gl8-adoSCCd_eE7oOe2vI';
         
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
         // Get username from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -479,7 +479,7 @@
             };
             
             // Save to Supabase
-            const { error } = await supabase.from('bookings').insert([booking]);
+            const { error } = await supabaseClient.from('bookings').insert([booking]);
             
             if (error) {
                 alert('Error: ' + error.message);
