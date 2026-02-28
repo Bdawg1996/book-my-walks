@@ -324,10 +324,15 @@
         let walkerData = null;
         
         async function loadWalker() {
+            console.log('loadWalker called, username:', username);
+            
             if (!username) {
+                console.log('No username, showing not found');
                 showNotFound();
                 return;
             }
+            
+            console.log('Fetching walker:', username.toLowerCase());
             
             const { data, error } = await supabaseClient
                 .from('walker_profiles')
@@ -335,7 +340,10 @@
                 .eq('username', username.toLowerCase())
                 .single();
             
+            console.log('Query result:', data, error);
+            
             if (error || !data) {
+                console.log('Error or no data, showing not found');
                 showNotFound();
                 return;
             }
