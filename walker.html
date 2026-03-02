@@ -484,6 +484,11 @@
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            if (!walkerData) {
+                alert('Error: Walker not loaded. Please refresh the page.');
+                return;
+            }
+            
             const booking = {
                 walker_id: walkerData.id,
                 walker_username: walkerData.username,
@@ -509,30 +514,42 @@
             }
             
             // Send email notification
-            await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 're_SKd7r9UL_FczYCzvJMehcomvLDT4FZinE'
-                },
-                body: JSON.stringify({
-                    from: 'Book My Walks <onboarding@resend.dev>',
-                    to: walkerData.email,
-                    subject: `New Booking from ${booking.client_name}`,
-                    html: `
-                        <h2>New Booking Request!</h2>
-                        <p><strong>Client:</strong> ${booking.client_name}</p>
-                        <p><strong>Email:</strong> ${booking.client_email}</p>
-                        <p><strong>Phone:</strong> ${booking.client_phone}</p>
-                        <p><strong>Dog:</strong> ${booking.dog_name} ${booking.dog_breed ? `(${booking.dog_breed})` : ''}</p>
-                        <p><strong>Service:</strong> ${booking.service_type}</p>
-                        <p><strong>Date:</strong> ${booking.booking_date}</p>
-                        <p><strong>Notes:</strong> ${booking.notes || 'None'}</p>
-                    `
-                })
-            });
+            try {
+                const emailRes = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 're_SKd7r9UL_FczYCzvJMehcomvLDT4FZinE'
+                    },
+                    body: JSON.stringify({
+                        from: 'Book My Walks <onboarding@resend.dev>',
+                        to: walkerData.email,
+                        subject: `New Booking from ${booking.client_name}`,
+                        html: `
+                            <h2>New Booking Request!</h2>
+                            <p><strong>Client:</strong> ${booking.client_name}</p>
+                            <p><strong>Email:</strong> ${booking.client_email}</p>
+                            <p><strong>Phone:</strong> ${booking.client_phone}</p>
+                            <p><strong>Dog:</strong> ${booking.dog_name} ${booking.dog_breed ? `(${booking.dog_breed})` : ''}</p>
+                            <p><strong>Service:</strong> ${booking.service_type}</p>
+                            <p><strong>Date:</strong> ${booking.booking_date}</p>
+                            <p><strong>Notes:</strong> ${booking.notes || 'None'}</p>
+                        `
+                    })
+                });
+                
+                if (!emailRes.ok) {
+                    const emailErr = await emailRes.text();
+                    console.error('Email error:', emailErr);
+                    alert('Booking saved but email failed. The walker will still be notified.');
+                } else {
+                    alert('Booking request sent! The walker will contact you soon.');
+                }
+            } catch (emailErr) {
+                console.error('Email error:', emailErr);
+                alert('Booking saved but email failed. The walker will still be notified.');
+            }
             
-            alert('Booking request sent! The walker will contact you soon.');
             closeModal();
             document.getElementById('bookingForm').reset();
         });
