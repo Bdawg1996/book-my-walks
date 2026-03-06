@@ -348,8 +348,16 @@
                 return;
             }
             
-            walkerData = data[0];
-            renderWalker(data[0]);
+            const walker = data[0];
+            
+            // Check if walker is active or in preview mode
+            if (walker.status === 'preview') {
+                showPreviewMode();
+                return;
+            }
+            
+            walkerData = walker;
+            renderWalker(walker);
         }
         
         function showNotFound() {
@@ -357,6 +365,20 @@
                 <div class="not-found">
                     <h2>Walker Not Found</h2>
                     <p>This page doesn't exist yet.</p>
+                    <div class="signup-cta">
+                        <p>Are you a dog walker?</p>
+                        <p><a href="/signup.html">Create your page →</a></p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showPreviewMode() {
+            document.getElementById('content').innerHTML = `
+                <div class="not-found">
+                    <h2>Preview Mode</h2>
+                    <p>This page is still in preview mode.</p>
+                    <p>The walker needs to upgrade to make their page live.</p>
                     <div class="signup-cta">
                         <p>Are you a dog walker?</p>
                         <p><a href="/signup.html">Create your page →</a></p>
