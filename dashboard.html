@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Book My Walks</title>
+    <meta name="theme-color" content="#000000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+        .logout {
+            color: #888;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logout:hover {
+            color: #fff;
+        }
+        .status-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .status-badge.preview {
+            background: #f59e0b;
+            color: #000;
+        }
+        .status-badge.active {
+            background: #10b981;
+            color: #fff;
+        }
+        .status-badge.pending {
+            background: #6b7280;
+            color: #fff;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .link-box {
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+        .link-box a {
+            color: #4F46E5;
+            text-decoration: none;
+        }
+        .link-box a:hover {
+            text-decoration: underline;
+        }
+        .upgrade-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        .upgrade-btn:hover {
+            opacity: 0.9;
+        }
+        .profile-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 15px;
+            margin-left: 10px;
+        }
+        .profile-btn:hover {
+            background: #444;
+        }
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/" class="logo">Book My Walks</a>
+            <a onclick="logout()" class="logout">Sign Out</a>
+        </header>
+        
+        <div id="loading" class="loading">Loading...</div>
+        
+        <div id="dashboard" style="display: none;">
+            <div class="status-card">
+                <span id="statusBadge" class="status-badge preview">Preview Mode</span>
+                <h1>Your Page</h1>
+                <p class="subtitle" id="pageStatus">Your page is in preview mode</p>
+                
+                <div class="link-box">
+                    <strong>Preview Link:</strong><br>
+                    <a id="previewLink" href="#">bookmywalks.com/walker.html?u=yourname</a>
+                </div>
+                
+                <div id="liveLinkBox" class="link-box" style="display: none;">
+                    <strong>Live Link:</strong><br>
+                    <a id="liveLink" href="#">yourname.bookmywalks.com</a>
+                </div>
+                
+                <div id="upgradeSection">
+                    <p style="color: #888; margin-top: 15px;">Upgrade to make your page live and get your custom subdomain!</p>
+                    <a href="#" id="upgradeBtn" class="upgrade-btn">Upgrade to Pro - $19/month</a>
+                </div>
+                
+                <a href="profile.html" id="editProfileBtn" class="profile-btn">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://anvwngvmtwfzwvyzojhr.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFudnduZ3ZtdHdmend2eXpvamhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMzE3OTAsImV4cCI6MjA4NzgwNzc5MH0.PIHgghMQj_aIcwLgoKpzwT8GSmq2kS5Q7Xumug1W7-w';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let currentUser = null;
+        let walkerData = null;
+
+        async function checkAuth() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return null;
+            }
+            currentUser = session.user;
+            return session;
+        }
+
+        async function loadWalker() {
+            const session = await checkAuth();
+            if (!session) return;
+
+            // Get walker profile
+            const { data: walker, error } = await supabaseClient
+                .from('walker_profiles')
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .maybeSingle();
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+
+            if (!walker) {
+                // No profile yet - redirect to create one
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            walkerData = walker;
+            updateDashboard(walker);
+        }
+
+        function updateDashboard(walker) {
+            const status = walker.status || 'preview';
+            const badge = document.getElementById('statusBadge');
+            const pageStatus = document.getElementById('pageStatus');
+            const previewLink = document.getElementById('previewLink');
+            const liveLinkBox = document.getElementById('liveLinkBox');
+            const liveLink = document.getElementById('liveLink');
+            const upgradeSection = document.getElementById('upgradeSection');
+            
+            // Update links
+            previewLink.href = 'walker.html?u=' + walker.username;
+            
+            if (status === 'active') {
+                badge.className = 'status-badge active';
+                badge.textContent = 'Live';
+                pageStatus.textContent = 'Your page is live! Share your custom link.';
+                liveLinkBox.style.display = 'block';
+                liveLink.href = 'https://' + walker.username + '.bookmywalks.com';
+                liveLink.textContent = walker.username + '.bookmywalks.com';
+                upgradeSection.style.display = 'none';
+            } else {
+                badge.className = 'status-badge preview';
+                badge.textContent = 'Preview Mode';
+                pageStatus.textContent = 'Upgrade to make your page live!';
+                liveLinkBox.style.display = 'none';
+                upgradeSection.style.display = 'block';
+            }
+        }
+
+        async function logout() {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'login.html';
+        }
+
+        loadWalker();
+    </script>
+</body>
+</html>

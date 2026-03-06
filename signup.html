@@ -150,9 +150,10 @@
         
         <div class="error" id="error"></div>
         <div class="success" id="success">
-            ✅ You're all set!<br><br>
-            Your page is live at:<br>
-            <a id="profileLink" href="#"></a>
+            ✅ Account created!<br><br>
+            Your page is in <strong>preview mode</strong>.<br>
+            <a id="profileLink" href="#"></a><br><br>
+            <small>Redirecting to dashboard...</small>
         </div>
         
         <form id="signupForm">
@@ -170,6 +171,12 @@
             <div class="form-group">
                 <label>Email * (for booking notifications)</label>
                 <input type="email" id="email" required placeholder="john@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label>Password *</label>
+                <input type="password" id="password" required placeholder="Create a password" minlength="6">
+                <small style="color: #666">At least 6 characters</small>
             </div>
             
             <div class="form-group">
@@ -247,16 +254,34 @@
             const username = document.getElementById('username').value.toLowerCase().trim();
             const fullName = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
             
             try {
-                console.log('Submitting to Supabase...');
+                console.log('Creating auth user...');
                 
+                // Step 1: Create auth user
+                const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                    email,
+                    password
+                });
+                
+                if (authError) throw authError;
+                if (!authData.user) throw new Error('Failed to create account');
+                
+                const userId = authData.user.id;
+                console.log('Auth user created:', userId);
+                
+                console.log('Creating walker profile...');
+                
+                // Step 2: Create walker profile with user_id
                 const { data, error: err } = await supabaseClient
                     .from('walker_profiles')
                     .insert([{
+                        user_id: userId,
                         username: username,
                         full_name: fullName,
                         email: email,
+                        status: 'preview',
                         bio: document.getElementById('bio').value.trim() || null,
                         photo1: document.getElementById('photo1').value.trim() || null,
                         photo2: document.getElementById('photo2').value.trim() || null,
@@ -274,10 +299,14 @@
                 console.log('Response:', data, err);
                 if (err) throw err;
                 
-                document.getElementById('signupForm').style.display = 'none';
-                success.style.display = 'block';
-                document.getElementById('profileLink').href = '/walker.html?u=' + username;
-                document.getElementById('profileLink').textContent = username + '.bookmywalks.com';
+                // Sign in the user
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
                 
             } catch (err) {
                 console.log('Error:', err);
