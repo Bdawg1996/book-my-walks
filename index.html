@@ -231,13 +231,26 @@
 
     <!-- Hero -->
     <section class="hero">
-        <div class="container" style="text-align: center; max-width: 800px;">
-            <div class="hero-badge" style="margin: 0 auto 24px;">🐾 Only 10 Founding Member Spots Available</div>
-            <h1>What if walking dogs<br>was your whole plan?</h1>
-            <p class="hero-sub">Book My Walks gives you everything you need to launch a real dog walking business — your own booking page, a monthly strategy call with a 13-year industry veteran, and tools that run your business while you're on the leash.</p>
-            <div class="hero-ctas" style="justify-content: center;">
-                <a href="#pricing" class="btn btn-primary btn-large">Claim your founding member spot →</a>
-                <a href="#how-it-works" class="btn btn-outline btn-large">See how it works</a>
+        <div class="container">
+            <div>
+                <div class="hero-badge">🐾 Only 10 Founding Member Spots Available</div>
+                <h1>What if walking dogs<br>was your whole plan?</h1>
+                <p class="hero-sub">Book My Walks gives you everything you need to launch a real dog walking business — your own booking page, a monthly strategy call with a 13-year industry veteran, and tools that run your business while you're on the leash.</p>
+                <div class="hero-ctas">
+                    <a href="#pricing" class="btn btn-primary btn-large">Claim your founding member spot →</a>
+                    <a href="#how-it-works" class="btn btn-outline btn-large">See how it works</a>
+                </div>
+            </div>
+            <div>
+                <div class="domain-card">
+                    <h3>Your page is waiting.</h3>
+                    <p>Type your name to test your booking page.</p>
+                    <div class="domain-input-wrap">
+                        <input type="text" class="domain-input" placeholder="yourname" id="heroUsername">
+                        <span class="domain-suffix">.bookmywalks.com</span>
+                    </div>
+                    <a href="preview.html" class="btn btn-primary" id="heroClaimBtn">Test My Page →</a>
+                </div>
             </div>
         </div>
     </section>
@@ -424,7 +437,8 @@
         <div class="container">
             <h2>Your business starts<br>with one walk.</h2>
             <p>Claim your founding member spot today. Your booking page goes live immediately.</p>
-            <a href="#pricing" class="btn btn-primary btn-large">Claim Your Spot →</a>
+            <a href="#pricing" class="btn btn-primary btn-large">Get Started →</a>
+            <p style="color: #666; margin-top: 24px; font-size: 0.875rem;">or <a href="preview.html" style="color: #4F46E5; text-decoration: underline;">test your page first →</a></p>
         </div>
     </section>
 
@@ -442,6 +456,22 @@
         function toggleMobileMenu() {
             document.getElementById('mobileNav').classList.toggle('active');
         }
+        
+        // Handle username input → preview button
+        function updatePreviewLink() {
+            const heroInput = document.getElementById('heroUsername');
+            const footerInput = document.getElementById('footerUsername');
+            const username = heroInput?.value?.trim() || footerInput?.value?.trim() || '';
+            
+            const heroBtn = document.getElementById('heroClaimBtn');
+            
+            if (heroBtn) {
+                heroBtn.href = 'preview.html' + (username ? '?u=' + encodeURIComponent(username.toLowerCase()) : '');
+            }
+        }
+        
+        document.getElementById('heroUsername')?.addEventListener('input', updatePreviewLink);
+        document.getElementById('footerUsername')?.addEventListenerListener('input', updatePreviewLink);
     </script>
 </body>
 </html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Your Page | Book My Walks</title>
+    <meta name="theme-color" content="#000000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .preview-badge {
+            background: #4F46E5;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .username-display {
+            color: #4F46E5;
+            font-weight: 700;
+        }
+        .preview-url {
+            color: #666;
+            margin-bottom;
+        }
+       : 30px .test-cta {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-cta h2 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        .test-cta p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .service-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .service-info p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10B981;
+        }
+        .book-btn {
+            width: 100%;
+            padding: 16px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .book-btn:hover {
+            background: #4338ca;
+        }
+        .booking-form {
+            display: none;
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+        .booking-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #252525;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+        }
+        .booking-success {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .booking-success.active {
+            display: block;
+        }
+        .booking-success h3 {
+            font-size: 1.5rem;
+            color: #10B981;
+            margin-bottom: 16px;
+        }
+        .upgrade-cta {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .upgrade-cta h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+        .upgrade-cta p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .upgrade-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #fff;
+            color: #4F46E5;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to Book My Walks</a>
+        
+        <div style="text-align: center; padding: 40px 0 20px;">
+            <span class="preview-badge">🔍 Preview Mode</span>
+            <h1>Meet <span class="username-display" id="displayUsername">yourname</span></h1>
+            <p class="preview-url"><span class="username-display" id="urlUsername">yourname</span>.bookmywalks.com</p>
+        </div>
+        
+        <!-- Booking Test -->
+        <div class="test-cta">
+            <h2>🐕 Test the Booking</h2>
+            <p>This is what your clients will see. Try booking a walk!</p>
+            
+            <div class="service-card">
+                <div class="service-info">
+                    <h4>30 Minute Walk</h4>
+                    <p>Perfect for a quick potty break</p>
+                </div>
+                <div class="service-price">$25</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-info">
+                    <h4>60 Minute Adventure</h4>
+                    <p>Full walk with park time</p>
+                </div>
+                <div class="service-price">$40</div>
+            </div>
+            
+            <button class="book-btn" onclick="showBookingForm()">Book a Walk</button>
+            
+            <div class="booking-form" id="bookingForm">
+                <h3 style="margin-bottom: 20px;">Book Your Free Test Walk</h3>
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="clientName" placeholder="John Smith">
+                </div>
+                <div class="form-group">
+                    <label>Dog's Name</label>
+                    <input type="text" id="dogName" placeholder="Buddy">
+                </div>
+                <div class="form-group">
+                    <label>Your Email</label>
+                    <input type="email" id="clientEmail" placeholder="you@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="clientNotes" rows="3" placeholder="Any special instructions?"></textarea>
+                </div>
+                <button class="book-btn" onclick="submitTestBooking()">Send Booking Request</button>
+            </div>
+            
+            <div class="booking-success" id="bookingSuccess">
+                <h3>✅ Booking Sent!</h3>
+                <p>Your test booking was sent. In a real scenario, the walker would get an email notification.</p>
+                <button class="book-btn" onclick="resetBooking()">Test Another Booking</button>
+            </div>
+        </div>
+        
+        <!-- Upgrade CTA -->
+        <div class="upgrade-cta">
+            <h3>🚀 Make It Real</h3>
+            <p>This is just a preview. Claim your spot to get your live booking page.</p>
+            <a href="signup.html" class="upgrade-btn">Claim My Spot →</a>
+        </div>
+    </div>
+
+    <script>
+        // Get username from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let username = urlParams.get('u') || 'yourname';
+        
+        document.getElementById('displayUsername').textContent = username;
+        document.getElementById('urlUsername').textContent = username;
+        
+        function showBookingForm() {
+            document.getElementById('bookingForm').classList.add('active');
+        }
+        
+        function submitTestBooking() {
+            const name = document.getElementById('clientName').value;
+            const dog = document.getElementById('dogName').value;
+            const email = document.getElementById('clientEmail').value;
+            
+            if (!name || !dog || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Show success
+            document.getElementById('bookingForm').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.add('active');
+        }
+        
+        function resetBooking() {
+            document.getElementById('bookingSuccess').classList.remove('active');
+            document.getElementById('clientName').value = '';
+            document.getElementById('dogName').value = '';
+            document.getElementById('clientEmail').value = '';
+            document.getElementById('clientNotes').value = '';
+        }
+    </script>
+</body>
+</html>
