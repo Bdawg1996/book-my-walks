@@ -61,6 +61,9 @@
         .domain-card li { color: #888; padding: 8px 0; display: flex; align-items: center; gap: 12px; }
         .domain-card li::before { content: "✓"; color: #10B981; font-weight: 700; }
         
+        /* Make buttons pop in dark card */
+        .domain-card .btn-primary { background: #4F46E5 !important; border: none !important; padding: 14px 24px !important; }
+        
         /* Stats Strip */
         .stats { padding: 60px 0; background: #000; color: #fff; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
@@ -145,9 +148,11 @@
             .btn-large { padding: 14px 24px; font-size: 1rem; }
             
             /* Domain card - full width, compact */
-            .domain-card { padding: 24px; }
+            .domain-card { padding: 24px; margin: 0 16px; }
             .domain-card h3 { font-size: 1.25rem; }
             .domain-card ul { font-size: 0.875rem; }
+            .domain-input-wrap { flex-wrap: wrap; }
+            .domain-input { font-size: 1rem !important; padding: 10px !important; }
             
             /* Stats - smaller */
             .stats { padding: 40px 0; }
@@ -241,8 +246,9 @@
                     <h3>Your page is waiting.</h3>
                     <p>Type your name and see what your business looks like.</p>
                     <div class="domain-input-wrap">
-                        <input type="text" class="domain-input" placeholder="yourname" id="heroUsername">
-                        <span class="domain-suffix">.bookmywalks.com</span>
+                        <span class="domain-suffix">yourname</span>
+                        <span class="domain-suffix" style="color:#555;">.</span>
+                        <input type="text" class="domain-input" placeholder="bookmywalks" id="heroUsername">
                     </div>
                     <a href="signup.html" class="btn btn-primary" id="heroClaimBtn">Claim my spot →</a>
                     <ul>
@@ -442,8 +448,9 @@
                 <h3>Claim your spot</h3>
                 <p>Type your name to get started</p>
                 <div class="domain-input-wrap">
-                    <input type="text" class="domain-input" placeholder="yourname" id="footerUsername">
-                    <span class="domain-suffix">.bookmywalks.com</span>
+                    <span class="domain-suffix">yourname</span>
+                    <span class="domain-suffix" style="color:#555;">.</span>
+                    <input type="text" class="domain-input" placeholder="bookmywalks" id="footerUsername">
                 </div>
                 <a href="signup.html" class="btn btn-primary" id="footerClaimBtn">Claim my founding member spot →</a>
                 <p style="color: #666; margin-top: 16px; font-size: 0.875rem;">Only 10 spots at $99. Price increases to $149 after that.</p>
