@@ -246,11 +246,10 @@
                     <h3>Your page is waiting.</h3>
                     <p>Type your name and see what your business looks like.</p>
                     <div class="domain-input-wrap">
-                        <span class="domain-suffix">yourname</span>
-                        <span class="domain-suffix" style="color:#555;">.</span>
-                        <input type="text" class="domain-input" placeholder="bookmywalks" id="heroUsername">
+                        <input type="text" class="domain-input" placeholder="yourname" id="heroUsername">
+                        <span class="domain-suffix">.bookmywalks.com</span>
                     </div>
-                    <a href="signup.html" class="btn btn-primary" id="heroClaimBtn">Claim my spot →</a>
+                    <a href="signup.html" class="btn btn-primary" id="heroClaimBtn">Check Availability →</a>
                     <ul>
                         <li>1 hour strategy call every month</li>
                         <li>Your own booking page live today</li>
@@ -448,11 +447,10 @@
                 <h3>Claim your spot</h3>
                 <p>Type your name to get started</p>
                 <div class="domain-input-wrap">
-                    <span class="domain-suffix">yourname</span>
-                    <span class="domain-suffix" style="color:#555;">.</span>
-                    <input type="text" class="domain-input" placeholder="bookmywalks" id="footerUsername">
+                    <input type="text" class="domain-input" placeholder="yourname" id="footerUsername">
+                    <span class="domain-suffix">.bookmywalks.com</span>
                 </div>
-                <a href="signup.html" class="btn btn-primary" id="footerClaimBtn">Claim my founding member spot →</a>
+                <a href="signup.html" class="btn btn-primary" id="footerClaimBtn">Check Availability →</a>
                 <p style="color: #666; margin-top: 16px; font-size: 0.875rem;">Only 10 spots at $99. Price increases to $149 after that.</p>
             </div>
         </div>
@@ -475,17 +473,18 @@
         
         // Handle username input → claim button
         function updateClaimLinks() {
-            const username = document.getElementById('heroUsername')?.value || '';
-            const footerUsername = document.getElementById('footerUsername')?.value || '';
+            const heroInput = document.getElementById('heroUsername');
+            const footerInput = document.getElementById('footerUsername');
+            const username = heroInput?.value?.trim() || footerInput?.value?.trim() || '';
             
             const heroBtn = document.getElementById('heroClaimBtn');
             const footerBtn = document.getElementById('footerClaimBtn');
             
             if (heroBtn) {
-                heroBtn.href = 'signup.html' + (username ? '?u=' + username : '');
+                heroBtn.href = 'signup.html' + (username ? '?u=' + encodeURIComponent(username.toLowerCase()) : '');
             }
             if (footerBtn) {
-                footerBtn.href = 'signup.html' + (footerUsername ? '?u=' + footerUsername : '');
+                footerBtn.href = 'signup.html' + (username ? '?u=' + encodeURIComponent(username.toLowerCase()) : '');
             }
         }
         
