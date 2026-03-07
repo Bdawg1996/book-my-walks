@@ -240,6 +240,13 @@
         
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
+        // Pre-fill username from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const prefillUser = urlParams.get('u');
+        if (prefillUser) {
+            document.getElementById('username').value = prefillUser.toLowerCase();
+        }
+        
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
