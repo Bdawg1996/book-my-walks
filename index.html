@@ -17,7 +17,16 @@
         
         /* Header */
         header { padding: 20px 0; background: #fff; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #E5E5E5; }
-        header .container { display: flex; justify-content: space-between; align-items: center; }
+        header .container { display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .mobile-menu-btn span { display: block; width: 24px; height: 2px; background: #000; margin: 6px 0; }
+        .mobile-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid #E5E5E5; padding: 20px; flex-direction: column; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .mobile-nav.active { display: flex; }
+        .mobile-nav a { color: #333; font-weight: 500; padding: 8px 0; }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+        }
         .logo { font-size: 1.5rem; font-weight: 800; color: #000; text-decoration: none; }
         .logo span { margin-right: 8px; }
         nav { display: flex; gap: 32px; align-items: center; }
@@ -121,13 +130,72 @@
         .footer-tagline { color: #666; }
         
         @media (max-width: 768px) {
-            .hero .container { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr; gap: 40px; }
-            .steps-grid { grid-template-columns: 1fr 1fr; }
-            .features-grid { grid-template-columns: 1fr; }
-            .mentor-content { grid-template-columns: 1fr; }
+            /* Navigation */
             nav { display: none; }
-            .hero h1 { font-size: 2.5rem; }
+            .logo { font-size: 1.2rem; }
+            
+            /* Hero - stack but keep compact */
+            .hero { padding: 40px 0; }
+            .hero .container { grid-template-columns: 1fr; gap: 40px; }
+            .hero-badge { font-size: 0.75rem; padding: 6px 12px; }
+            .hero h1 { font-size: 2rem; line-height: 1.2; }
+            .hero-sub { font-size: 1rem; }
+            .hero-ctas { flex-direction: column; }
+            .hero-ctas .btn { width: 100%; text-align: center; }
+            .btn-large { padding: 14px 24px; font-size: 1rem; }
+            
+            /* Domain card - full width, compact */
+            .domain-card { padding: 24px; }
+            .domain-card h3 { font-size: 1.25rem; }
+            .domain-card ul { font-size: 0.875rem; }
+            
+            /* Stats - smaller */
+            .stats { padding: 40px 0; }
+            .stats-grid { grid-template-columns: 1fr; gap: 32px; }
+            .stat-num { font-size: 2rem; }
+            .stat-label { font-size: 0.875rem; }
+            
+            /* Sections - tighter padding */
+            .how-it-works, .what-you-get, .mentor, .pricing, .final-cta { padding: 60px 0; }
+            .section-title { font-size: 1.75rem; }
+            .section-sub { font-size: 1rem; }
+            
+            /* Steps - 2x2 grid */
+            .steps-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+            .step { padding: 0; }
+            .step-icon { width: 48px; height: 48px; font-size: 1.25rem; }
+            .step h4 { font-size: 0.95rem; }
+            .step p { font-size: 0.8rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+            
+            /* Features - 2 columns on mobile */
+            .features-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .feature { padding: 16px; }
+            .feature h4 { font-size: 0.9rem; }
+            .feature p { font-size: 0.75rem; display: none; }
+            .feature-tag { font-size: 0.6rem; padding: 2px 6px; }
+            
+            /* Mentor */
+            .mentor-content { grid-template-columns: 1fr; gap: 40px; }
+            .mentor-text h2 { font-size: 1.75rem; }
+            .mentor-stats { flex-wrap: wrap; gap: 20px; }
+            .mentor-stat { flex: 1; min-width: 80px; }
+            .mentor-stat-num { font-size: 1.75rem; }
+            .mentor-card { padding: 24px; }
+            .mentor-card p { font-size: 0.9rem; }
+            
+            /* Pricing */
+            .pricing-card { padding: 24px; }
+            .pricing-price { font-size: 2.5rem; }
+            .pricing-features { font-size: 0.875rem; }
+            .pricing-features li { padding: 8px 0; }
+            
+            /* Final CTA */
+            .final-cta h2 { font-size: 2rem; }
+            .final-cta .domain-card { padding: 24px; }
+            
+            /* Footer */
+            footer { padding: 40px 0; }
+            footer .container { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
@@ -136,13 +204,23 @@
     <header>
         <div class="container">
             <a href="/" class="logo"><span>🐾</span> Book My Walks</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
             <nav>
                 <a href="#how-it-works">How It Works</a>
                 <a href="#what-you-get">What You Get</a>
                 <a href="#mentor">Your Mentor</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-primary">Claim Your Spot</a>
+                <a href="signup.html" class="btn btn-primary">Claim Your Spot</a>
             </nav>
+            <div class="mobile-nav" id="mobileNav">
+                <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
+                <a href="#what-you-get" onclick="toggleMobileMenu()">What You Get</a>
+                <a href="#mentor" onclick="toggleMobileMenu()">Your Mentor</a>
+                <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
+                <a href="signup.html" class="btn btn-primary" onclick="toggleMobileMenu()">Claim Your Spot</a>
+            </div>
         </div>
     </header>
 
@@ -383,6 +461,11 @@
     </footer>
 
     <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+        
         // Handle username input → claim button
         function updateClaimLinks() {
             const username = document.getElementById('heroUsername')?.value || '';
