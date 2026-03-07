@@ -9,7 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">        // Set remaining spots (would come from backend in production)
+        const spotsEl = document.getElementById("spotsRemaining");
+        if (spotsEl) {
+            const spots = Math.floor(Math.random() * 6) + 5;
+            spotsEl.textContent = "🔴 " + spots + " founding member spots remaining";
+        }
+    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Outfit', sans-serif; background: #FAFAFA; color: #1A1A1A; line-height: 1.6; }
@@ -301,7 +307,7 @@
                 <div class="step">
                     <div class="step-icon">🐕</div>
                     <h4>Build your client base</h4>
-                    <p>Use your booking page, AI newsletter, and income tracker to grow. We'll help you get your first client, then your tenth.</p>
+                    <p>Use your booking page and income tracker to grow. We'll help you get your first client, then your tenth.</p>
                 </div>
             </div>
         </div>
@@ -336,8 +342,8 @@
                         <span class="feature-icon">📰</span>
                         <span class="feature-tag">Included</span>
                     </div>
-                    <h4>AI client newsletter</h4>
-                    <p>Upload your walk photos and notes. AI compiles and sends beautiful updates to pet parents.</p>
+                    <h4>Client update emails</h4>
+                    <p>Send beautiful walk updates to pet parents. Builds loyalty without the work.</p>
                 </div>
                 <div class="feature">
                     <div class="feature-header">
@@ -384,7 +390,7 @@
                         </div>
                         <div class="mentor-stat">
                             <div class="mentor-stat-num">30</div>
-                            <div class="mentor-stat-label">Days to your first paying client</div>
+                            <div class="mentor-stat-label">Our goal: your first client within 30 days</div>
                         </div>
                         <div class="mentor-stat">
                             <div class="mentor-stat-num">48hrs</div>
@@ -416,8 +422,8 @@
                 <ul class="pricing-features">
                     <li>Your own booking page at yourname.bookmywalks.com</li>
                     <li>Booking & scheduling system</li>
-                    <li>AI client newsletter</li>
-                    <li>Income tracker with tax-ready exports</li>
+                    <li>Client update emails</li>
+                    <li>Income tracker spreadsheet — every walk logged, formulas built in</li>
                     <li>1 hour monthly strategy call</li>
                     <li>Async email support — replies within 48 hours</li>
                     <li>Marketing & client recruitment guidance</li>
@@ -425,9 +431,82 @@
                     <li>Business card & site design help</li>
                 </ul>
                 
-                <div class="pricing-urgency">🔴 7 founding member spots remaining</div>
+                <div class="pricing-urgency" id="spotsRemaining">🔴 7 founding member spots remaining</div>
                 <a href="signup.html" class="btn btn-primary">Claim my spot for $99 →</a>
                 <p class="pricing-fine">Cancel anytime. No contracts. Price locks in for life as long as you stay subscribed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq" style="padding: 100px 0; background: #fff;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-label">Questions?</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <!-- Getting Started -->
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; color: #4F46E5;">Getting started</h3>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Do I need experience to start?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">No. That's exactly why Book My Walks exists. We walk you through everything from your first client to your first $1,000 month.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">How much can I realistically make?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Full time dog walkers typically earn $2,500–$3,000 a month. Part time is $800–$1,200. It depends on your city, your rates, and how many clients you take on. We help you figure out the right number on your first call.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">How long until I get my first client?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Our goal is your first client within 30 days. Some walkers land one in the first week. It depends on how fast you move — we give you the exact playbook.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What do I need to get started?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">A phone, comfortable shoes, and a love for dogs. We handle the rest — your booking page, your business setup, your first client strategy.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Do I need to register a business or get insurance?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">It depends on your state. We cover both on your first strategy call. Insurance surprises most people — pet business liability typically runs $300–500 a year, which is less than most people pay for car insurance. We research the best options for your specific city.</div>
+                </details>
+            </div>
+            
+            <!-- About -->
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; color: #4F46E5;">About Book My Walks</h3>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What do I get for $99 a month?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Your own booking page at yourname.bookmywalks.com, a booking and scheduling system, an income tracker spreadsheet with all the formulas built in, one hour strategy call every month, and email support with replies within 48 hours.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What happens on the monthly strategy call?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">One hour focused entirely on your business. Marketing, getting clients, pricing, insurance, business cards — whatever you need most that month. No agenda, no fluff. Just answers from someone who's done this for 13 years.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Can I cancel anytime?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Yes. No contracts, no cancellation fees. Your founding member price locks in for life as long as you stay subscribed.</div>
+                </details>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Why is the founding member price so low?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">The first 10 members help shape the product. Your questions and feedback make Book My Walks better for everyone who comes after you. It's a fair trade — and your rate never changes.</div>
+                </details>
+            </div>
+            
+            <!-- What We Don't Handle -->
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; color: #4F46E5;">What Book My Walks doesn't handle</h3>
+                
+                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
+                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What doesn't Book My Walks cover?</summary>
+                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Three things — taxes, insurance, and client payments. We give you an income tracker spreadsheet that makes tax time simple, but we're not accountants. We don't provide insurance but we help you find affordable coverage on your first call. And you collect payments directly from clients however works for you — Venmo, Zelle, cash, whatever. We never touch your money and we never take a cut.</div>
+                </details>
             </div>
         </div>
     </section>
@@ -436,7 +515,7 @@
     <section class="final-cta">
         <div class="container">
             <h2>Your business starts<br>with one walk.</h2>
-            <p>Claim your founding member spot today. Your booking page goes live immediately.</p>
+            <p>Claim your founding member spot today. Your booking page goes live once your account is set up.</p>
             <a href="#pricing" class="btn btn-primary btn-large">Get Started →</a>
             <p style="color: #666; margin-top: 24px; font-size: 0.875rem;">or <a href="preview.html" style="color: #4F46E5; text-decoration: underline;">test your page first →</a></p>
         </div>
@@ -472,6 +551,12 @@
         
         document.getElementById('heroUsername')?.addEventListener('input', updatePreviewLink);
         document.getElementById('footerUsername')?.addEventListenerListener('input', updatePreviewLink);
+            // Set remaining spots (would come from backend in production)
+        const spotsEl = document.getElementById("spotsRemaining");
+        if (spotsEl) {
+            const spots = Math.floor(Math.random() * 6) + 5;
+            spotsEl.textContent = "🔴 " + spots + " founding member spots remaining";
+        }
     </script>
 </body>
 </html>
