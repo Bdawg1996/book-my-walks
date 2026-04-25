@@ -3,174 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Book My Walks</title>
-    <meta name="theme-color" content="#000000">
+    <title>Your Dashboard | Book My Walks</title>
+    <meta name="theme-color" content="#1B4332">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: #0A0A0A;
-            color: #fff;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #333;
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-        }
-        .logout {
-            color: #888;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .logout:hover {
-            color: #fff;
-        }
-        .status-card {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        .status-badge.preview {
-            background: #f59e0b;
-            color: #000;
-        }
-        .status-badge.active {
-            background: #10b981;
-            color: #fff;
-        }
-        .status-badge.pending {
-            background: #6b7280;
-            color: #fff;
-        }
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            color: #888;
-            margin-bottom: 20px;
-        }
-        .link-box {
-            background: #252525;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            word-break: break-all;
-        }
-        .link-box a {
-            color: #4F46E5;
-            text-decoration: none;
-        }
-        .link-box a:hover {
-            text-decoration: underline;
-        }
-        .upgrade-btn {
-            display: inline-block;
-            padding: 14px 28px;
-            background: #4F46E5;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            margin-top: 15px;
-        }
-        .upgrade-btn:hover {
-            opacity: 0.9;
-        }
-        .profile-btn {
-            display: inline-block;
-            padding: 14px 28px;
-            background: #333;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            margin-top: 15px;
-            margin-left: 10px;
-        }
-        .profile-btn:hover {
-            background: #444;
-        }
-        .loading {
-            text-align: center;
-            padding: 60px;
-            color: #888;
+        body { font-family: 'Outfit', sans-serif; background: #FDFAF5; color: #1A1A1A; min-height: 100vh; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid #E5E5E5; }
+        .logo { font-size: 1.3rem; font-weight: 800; color: #1B4332; text-decoration: none; }
+        .logo span { margin-right: 6px; }
+        .logout { color: #666; text-decoration: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+        .logout:hover { color: #1B4332; }
+        .status-card { background: #fff; border-radius: 16px; padding: 28px; margin-bottom: 28px; border: 1px solid #E5E5E5; }
+        .status-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .status-badge { display: inline-block; padding: 5px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 14px; }
+        .status-badge.preview { background: #FEF3C7; color: #92400E; }
+        .status-badge.active { background: #D8F3DC; color: #1B4332; }
+        .your-link { background: #1B4332; color: #fff; border-radius: 12px; padding: 20px; margin-top: 16px; }
+        .your-link .label { font-size: 0.8rem; color: #7EBF8E; margin-bottom: 6px; }
+        .your-link .url { font-size: 1.05rem; font-weight: 700; word-break: break-all; }
+        .your-link a { color: #fff; }
+        .upgrade-card { background: #1B4332; color: #fff; border-radius: 16px; padding: 28px; margin-bottom: 28px; text-align: center; }
+        .upgrade-card h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .upgrade-card p { color: #B7D9C0; margin-bottom: 20px; font-size: 0.95rem; }
+        .upgrade-card .price { font-size: 2.5rem; font-weight: 800; }
+        .upgrade-card .price span { font-size: 1rem; font-weight: 500; }
+        .upgrade-btn { display: inline-block; background: #52B788; color: #fff; padding: 14px 28px; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 1rem; margin-top: 16px; }
+        .upgrade-btn:hover { opacity: 0.85; }
+        .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+        .info-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #E5E5E5; }
+        .info-card .label { font-size: 0.8rem; color: #888; margin-bottom: 6px; }
+        .info-card .value { font-size: 1.2rem; font-weight: 700; color: #1B4332; }
+        .form-card { background: #fff; border-radius: 16px; padding: 28px; border: 1px solid #E5E5E5; }
+        .form-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600; color: #444; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px 14px; border: 2px solid #D8F3DC; border-radius: 8px; font-size: 0.95rem; font-family: 'Outfit', sans-serif; background: #fff; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #1B4332; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .save-btn { background: #1B4332; color: #fff; border: none; padding: 14px 28px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; }
+        .save-btn:hover { opacity: 0.85; }
+        .save-msg { color: #1B4332; font-weight: 600; margin-top: 12px; display: none; }
+        #loading, #error { text-align: center; padding: 60px; color: #888; }
+        #error { color: #DC2626; }
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="loading">Loading...</div>
+    <div id="error" style="display:none;"></div>
+
+    <div id="dashboard" class="hidden">
         <header>
-            <a href="/" class="logo">Book My Walks</a>
-            <a onclick="logout()" class="logout">Sign Out</a>
+            <a href="/" class="logo">🐾 Book My Walks</a>
+            <a href="#" class="logout" onclick="signOut()">Sign Out</a>
         </header>
-        
-        <div id="loading" class="loading">Loading...</div>
-        
-        <div id="dashboard" style="display: none;">
-            <div class="status-card">
-                <span id="statusBadge" class="status-badge preview">Preview Mode</span>
-                <h1>Your Page</h1>
-                <p class="subtitle" id="pageStatus">Your page is in preview mode</p>
-                
-                <div class="link-box">
-                    <strong>Preview Link:</strong><br>
-                    <a id="previewLink" href="#">bookmywalks.com/walker.html?u=yourname</a>
-                </div>
-                
-                <div id="liveLinkBox" class="link-box" style="display: none;">
-                    <strong>Live Link:</strong><br>
-                    <a id="liveLink" href="#">yourname.bookmywalks.com</a>
-                </div>
-                
-                <div id="upgradeSection">
-                    <p style="color: #888; margin-top: 15px;">Upgrade to make your page live and get your custom subdomain!</p>
-                    <a href="#" id="upgradeBtn" class="upgrade-btn">Upgrade to Pro - $19/month</a>
-                </div>
-                
-                <a href="profile.html" id="editProfileBtn" class="profile-btn">Edit Profile</a>
+
+        <!-- Status / Link Card -->
+        <div class="status-card">
+            <div id="statusBadge" class="status-badge preview">Preview Mode</div>
+            <h2>Your page</h2>
+            <p id="statusText">Your page is not live yet. Upgrade to make it visible in the walker directory.</p>
+            <div class="your-link">
+                <div class="label">Your booking link:</div>
+                <div class="url"><a href="#" id="myLink" target="_blank">bookmywalks.com/walker/...</a></div>
             </div>
+        </div>
+
+        <!-- Upgrade Card (shown for preview accounts) -->
+        <div id="upgradeCard" class="upgrade-card">
+            <h2>Make your page live.</h2>
+            <p>You're on a free preview. Upgrade to activate your page and start getting clients.</p>
+            <div class="price">$19<span>/month</span></div>
+            <p style="color:#B7D9C0; font-size:0.85rem; margin-top:8px;">Flat fee. No commission. No contracts.</p>
+            <a href="#" class="upgrade-btn" id="upgradeBtn">Activate My Page →</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="label">30 min walk</div>
+                <div class="value" id="price30Display">$25</div>
+            </div>
+            <div class="info-card">
+                <div class="label">60 min walk</div>
+                <div class="value" id="price60Display">$40</div>
+            </div>
+            <div class="info-card">
+                <div class="label">2 hr walk</div>
+                <div class="value" id="price2hrDisplay">$70</div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div class="form-card">
+            <h2>Edit your profile</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName" placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label>Bio</label>
+                    <textarea id="bio" placeholder="Tell clients about yourself..." rows="3"></textarea>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>30 min price</label>
+                        <input type="text" id="price30" placeholder="$25">
+                    </div>
+                    <div class="form-group">
+                        <label>60 min price</label>
+                        <input type="text" id="price60" placeholder="$40">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>2 hr price</label>
+                    <input type="text" id="price2hr" placeholder="$70">
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+                <div class="save-msg" id="saveMsg">✓ Profile updated!</div>
+            </form>
         </div>
     </div>
 
     <script>
         const SUPABASE_URL = 'https://anvwngvmtwfzwvyzojhr.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFudnduZ3ZtdHdmend2eXpvamhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMzE3OTAsImV4cCI6MjA4NzgwNzc5MH0.PIHgghMQj_aIcwLgoKpzwT8GSmq2kS5Q7Xumug1W7-w';
-        
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let currentUser = null;
@@ -178,10 +146,7 @@
 
         async function checkAuth() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = 'login.html';
-                return null;
-            }
+            if (!session) { window.location.href = 'login.html'; return null; }
             currentUser = session.user;
             return session;
         }
@@ -190,7 +155,6 @@
             const session = await checkAuth();
             if (!session) return;
 
-            // Get walker profile
             const { data: walker, error } = await supabaseClient
                 .from('walker_profiles')
                 .select('*')
@@ -198,48 +162,79 @@
                 .maybeSingle();
 
             document.getElementById('loading').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
 
-            if (!walker) {
-                // No profile yet - redirect to create one
-                window.location.href = 'signup.html';
-                return;
-            }
+            if (!walker) { window.location.href = 'signup.html'; return; }
 
             walkerData = walker;
-            updateDashboard(walker);
+            renderDashboard(walker);
         }
 
-        function updateDashboard(walker) {
-            const status = walker.status || 'preview';
+        function renderDashboard(w) {
+            document.getElementById('dashboard').classList.remove('hidden');
+
+            const isActive = w.status === 'active';
             const badge = document.getElementById('statusBadge');
-            const pageStatus = document.getElementById('pageStatus');
-            const previewLink = document.getElementById('previewLink');
-            const liveLinkBox = document.getElementById('liveLinkBox');
-            const liveLink = document.getElementById('liveLink');
-            const upgradeSection = document.getElementById('upgradeSection');
-            
-            // Update links
-            previewLink.href = 'walker.html?u=' + walker.username;
-            
-            if (status === 'active') {
+            const statusText = document.getElementById('statusText');
+
+            if (isActive) {
                 badge.className = 'status-badge active';
-                badge.textContent = 'Live';
-                pageStatus.textContent = 'Your page is live! Share your custom link.';
-                liveLinkBox.style.display = 'block';
-                liveLink.href = 'https://' + walker.username + '.bookmywalks.com';
-                liveLink.textContent = walker.username + '.bookmywalks.com';
-                upgradeSection.style.display = 'none';
+                badge.textContent = '✓ Live';
+                statusText.textContent = 'Your page is live in the directory. Clients can find and book you.';
+                document.getElementById('upgradeCard').style.display = 'none';
             } else {
                 badge.className = 'status-badge preview';
-                badge.textContent = 'Preview Mode';
-                pageStatus.textContent = 'Upgrade to make your page live!';
-                liveLinkBox.style.display = 'none';
-                upgradeSection.style.display = 'block';
+                badge.textContent = '🔒 Preview Mode';
+                statusText.textContent = 'Your page is not visible yet. Activate to go live.';
             }
+
+            const username = w.username || '';
+            const link = `https://bookmywalks.com/walker/${username}`;
+            document.getElementById('myLink').href = link;
+            document.getElementById('myLink').textContent = `bookmywalks.com/walker/${username}`;
+
+            document.getElementById('upgradeBtn').href = '#';
+            document.getElementById('upgradeBtn').onclick = () => activateAccount(w);
+
+            document.getElementById('price30Display').textContent = w.service_30min_price || '$25';
+            document.getElementById('price60Display').textContent = w.service_60min_price || '$40';
+            document.getElementById('price2hrDisplay').textContent = w.service_2hr_price || '$70';
+
+            document.getElementById('fullName').value = w.full_name || '';
+            document.getElementById('bio').value = w.bio || '';
+            document.getElementById('price30').value = w.service_30min_price || '';
+            document.getElementById('price60').value = w.service_60min_price || '';
+            document.getElementById('price2hr').value = w.service_2hr_price || '';
         }
 
-        async function logout() {
+        async function activateAccount(w) {
+            if (!confirm('Activate your page for $19/month? You\'ll be listed in the public directory.')) return;
+            const { error } = await supabaseClient
+                .from('walker_profiles')
+                .update({ status: 'active' })
+                .eq('user_id', currentUser.id);
+            if (!error) loadWalker();
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const updates = {
+                full_name: document.getElementById('fullName').value,
+                bio: document.getElementById('bio').value,
+                service_30min_price: document.getElementById('price30').value,
+                service_60min_price: document.getElementById('price60').value,
+                service_2hr_price: document.getElementById('price2hr').value
+            };
+            const { error } = await supabaseClient
+                .from('walker_profiles')
+                .update(updates)
+                .eq('user_id', currentUser.id);
+            if (!error) {
+                document.getElementById('saveMsg').style.display = 'block';
+                setTimeout(() => document.getElementById('saveMsg').style.display = 'none', 2500);
+            }
+        });
+
+        async function signOut() {
             await supabaseClient.auth.signOut();
             window.location.href = 'login.html';
         }

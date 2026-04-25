@@ -3,229 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Book My Walks — Escape the 9-to-5. Become Your Own Boss.</title>
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Launch your dog walking business. Your own booking page, monthly strategy calls with industry veterans, and tools that run your business.">
+    <title>Book My Walks — Your Business. Your Clients. Your Name.</title>
+    <meta name="theme-color" content="#1B4332">
+    <meta name="description" content="Build your dog walking business without platform fees. Your own booking page, your own clients, your own income.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">        // Set remaining spots (would come from backend in production)
-        const spotsEl = document.getElementById("spotsRemaining");
-        if (spotsEl) {
-            const spots = Math.floor(Math.random() * 6) + 5;
-            spotsEl.textContent = "🔴 " + spots + " founding member spots remaining";
-        }
-    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Outfit', sans-serif; background: #FAFAFA; color: #1A1A1A; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        
+        body { font-family: 'Outfit', sans-serif; background: #FDFAF5; color: #1A1A1A; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
         /* Header */
-        header { padding: 20px 0; background: #fff; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #E5E5E5; }
+        header { padding: 20px 0; background: #fff; border-bottom: 1px solid #E5E5E5; position: sticky; top: 0; z-index: 100; }
         header .container { display: flex; justify-content: space-between; align-items: center; position: relative; }
         .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-        .mobile-menu-btn span { display: block; width: 24px; height: 2px; background: #000; margin: 6px 0; }
-        .mobile-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid #E5E5E5; padding: 20px; flex-direction: column; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .mobile-menu-btn span { display: block; width: 24px; height: 2px; background: #1B4332; margin: 6px 0; }
+        .mobile-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid #E5E5E5; padding: 20px; flex-direction: column; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 99; }
         .mobile-nav.active { display: flex; }
-        .mobile-nav a { color: #333; font-weight: 500; padding: 8px 0; }
-        
+        .mobile-nav a { color: #333; font-weight: 500; padding: 8px 0; text-decoration: none; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: #1B4332; text-decoration: none; }
+        .logo span { margin-right: 8px; }
+        nav { display: flex; gap: 28px; align-items: center; }
+        nav a { color: #666; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        nav a:hover { color: #1B4332; }
+        .btn { display: inline-block; padding: 10px 22px; border-radius: 100px; font-size: 0.9rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-primary { background: #1B4332; color: #fff; }
+        .btn-primary:hover { opacity: 0.85; }
+        .btn-outline { background: #fff; color: #1B4332; border: 2px solid #D8F3DC; }
+        .btn-outline:hover { border-color: #1B4332; }
+
+        /* Hero */
+        .hero { padding: 70px 0; background: linear-gradient(180deg, #fff 0%, #FDFAF5 100%); }
+        .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .pill-label { display: inline-block; background: #D8F3DC; color: #1B4332; padding: 6px 16px; border-radius: 100px; font-size: 0.875rem; font-weight: 600; margin-bottom: 20px; }
+        .hero h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; color: #1B4332; }
+        .hero-sub { font-size: 1.1rem; color: #555; margin-bottom: 28px; line-height: 1.7; }
+        .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn-large { padding: 14px 28px; font-size: 1rem; }
+
+        /* URL Preview Card */
+        .url-card { background: #1B4332; color: #fff; border-radius: 20px; padding: 36px; text-align: center; }
+        .url-card h3 { font-size: 1.3rem; margin-bottom: 6px; }
+        .url-card p { color: #7EBF8E; margin-bottom: 24px; font-size: 0.95rem; }
+        .url-preview { background: #0F2B1D; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .url-preview input { flex: 1; background: transparent; border: none; color: #fff; font-size: 1rem; font-family: 'Outfit', sans-serif; min-width: 0; }
+        .url-preview input::placeholder { color: #5A8068; }
+        .url-preview input:focus { outline: none; }
+        .url-suffix { color: #7EBF8E; white-space: nowrap; font-size: 0.95rem; }
+        .url-card .btn { width: 100%; padding: 14px; font-size: 1rem; }
+        .url-card ul { list-style: none; text-align: left; margin-top: 20px; }
+        .url-card li { color: #7EBF8E; padding: 7px 0; display: flex; align-items: center; gap: 10px; }
+        .url-card li::before { content: "✓"; color: #52B788; font-weight: 700; }
+
+        /* Stats Strip */
+        .stats { padding: 50px 0; background: #1B4332; color: #fff; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
+        .stat-num { font-size: 2.8rem; font-weight: 800; margin-bottom: 6px; }
+        .stat-label { color: #7EBF8E; font-size: 0.95rem; }
+
+        /* How It Works */
+        .how { padding: 80px 0; }
+        .section-label { text-align: center; color: #1B4332; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 12px; }
+        .section-title { text-align: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; color: #1B4332; }
+        .section-sub { text-align: center; color: #666; font-size: 1.1rem; max-width: 560px; margin: 0 auto 50px; }
+        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+        .step { text-align: center; }
+        .step-icon { width: 60px; height: 60px; background: #D8F3DC; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 16px; }
+        .step h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+        .step p { color: #666; font-size: 0.9rem; }
+
+        /* Different */
+        .diff { padding: 80px 0; background: #fff; }
+        .diff-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .diff-text h2 { font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: #1B4332; }
+        .diff-text p { color: #555; margin-bottom: 14px; font-size: 1rem; }
+        .diff-card { background: #1B4332; color: #fff; border-radius: 20px; padding: 36px; }
+        .diff-card h3 { font-size: 1.2rem; margin-bottom: 20px; }
+        .diff-card .line { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #0F2B1D; }
+        .diff-card .line:last-child { border-bottom: none; }
+        .diff-card .dash { color: #52B788; font-weight: 700; font-size: 1.1rem; }
+        .diff-card .line-text { font-size: 0.95rem; color: #B7D9C0; line-height: 1.5; }
+        .diff-card .line-text strong { color: #fff; }
+
+        /* Pricing */
+        .pricing { padding: 80px 0; background: #F9FAFB; }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 860px; margin: 0 auto; }
+        .price-card { background: #fff; border-radius: 20px; padding: 36px; border: 2px solid #E5E5E5; }
+        .price-card.featured { border-color: #1B4332; }
+        .price-card.featured .pc-label { background: #1B4332; color: #fff; }
+        .pc-label { display: inline-block; background: #F0F9F2; color: #1B4332; font-weight: 600; padding: 5px 14px; border-radius: 100px; font-size: 0.8rem; margin-bottom: 16px; }
+        .price-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+        .price-card .price { font-size: 3rem; font-weight: 800; color: #1B4332; margin-bottom: 4px; }
+        .price-card .price span { font-size: 1rem; color: #888; font-weight: 500; }
+        .price-card .psub { color: #888; margin-bottom: 24px; font-size: 0.9rem; }
+        .price-card ul { list-style: none; text-align: left; margin-bottom: 24px; }
+        .price-card li { padding: 10px 0; border-bottom: 1px solid #F3F3F3; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .price-card li::before { content: "✓"; color: #1B4332; font-weight: 700; }
+        .price-card .btn { width: 100%; text-align: center; padding: 14px; }
+
+        /* Founder Note */
+        .founder { padding: 80px 0; }
+        .founder-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .founder-text h2 { font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: #1B4332; }
+        .founder-text p { color: #555; margin-bottom: 14px; font-size: 1rem; }
+        .founder-quote { background: #fff; border-radius: 20px; padding: 36px; border: 1px solid #E5E5E5; }
+        .fq-text { font-size: 1.15rem; font-style: italic; color: #333; margin-bottom: 20px; line-height: 1.7; }
+        .fq-text::before { content: '"'; }
+        .fq-text::after { content: '"'; }
+        .fq-attr { color: #888; font-size: 0.9rem; }
+
+        /* Footer */
+        footer { padding: 40px 0; border-top: 1px solid #E5E5E5; text-align: center; color: #888; font-size: 0.875rem; }
+        footer a { color: #1B4332; text-decoration: none; }
+
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
-        }
-        .logo { font-size: 1.5rem; font-weight: 800; color: #000; text-decoration: none; }
-        .logo span { margin-right: 8px; }
-        nav { display: flex; gap: 32px; align-items: center; }
-        nav a { color: #666; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
-        nav a:hover { color: #000; }
-        .btn { display: inline-block; padding: 12px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: all 0.2s; }
-        .btn-primary { background: #000; color: #fff; }
-        .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
-        
-        /* Hero */
-        .hero { padding: 80px 0; background: linear-gradient(180deg, #fff 0%, #FAFAFA 100%); }
-        .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: #FEF3C7; color: #92400E; padding: 8px 16px; border-radius: 100px; font-size: 0.875rem; font-weight: 600; margin-bottom: 24px; }
-        .hero h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-        .hero-sub { font-size: 1.15rem; color: #555; margin-bottom: 32px; max-width: 520px; line-height: 1.65; }
-        .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-        .btn-large { padding: 16px 32px; font-size: 1.1rem; }
-        .btn-outline { background: #fff; color: #000; border: 2px solid #E5E5E5; }
-        .btn-outline:hover { border-color: #000; }
-        
-        /* Domain Card */
-        .domain-card { background: #000; color: #fff; border-radius: 24px; padding: 40px; text-align: center; }
-        .domain-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-        .domain-card p { color: #888; margin-bottom: 24px; }
-        .domain-input-wrap { background: #1A1A1A; border-radius: 12px; padding: 8px; display: flex; align-items: center; margin-bottom: 16px; }
-        .domain-input { flex: 1; background: transparent; border: none; color: #fff; font-size: 1.1rem; padding: 12px; font-family: 'Outfit', sans-serif; min-width: 0; }
-        .domain-input:focus { outline: none; }
-        .domain-input::placeholder { color: #666; }
-        .domain-suffix { color: #888; font-size: 1rem; white-space: nowrap; padding: 0 8px 0 0; }
-        .domain-card .btn { width: 100%; }
-        .domain-card ul { list-style: none; text-align: left; margin-top: 24px; }
-        .domain-card li { color: #888; padding: 8px 0; display: flex; align-items: center; gap: 12px; }
-        .domain-card li::before { content: "✓"; color: #10B981; font-weight: 700; }
-        
-        /* Make buttons pop in dark card */
-        .domain-card .btn-primary { background: #4F46E5 !important; border: none !important; padding: 14px 24px !important; }
-        
-        /* Stats Strip */
-        .stats { padding: 60px 0; background: #000; color: #fff; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
-        .stat-num { font-size: 3rem; font-weight: 800; margin-bottom: 8px; }
-        .stat-label { color: #888; font-size: 1rem; }
-        
-        /* How It Works */
-        .how-it-works { padding: 100px 0; }
-        .section-label { text-align: center; color: #4F46E5; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; margin-bottom: 16px; }
-        .section-title { text-align: center; font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; }
-        .section-sub { text-align: center; color: #666; font-size: 1.25rem; max-width: 600px; margin: 0 auto 60px; }
-        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-        .step { text-align: center; }
-        .step-icon { width: 64px; height: 64px; background: #F3F4F6; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 20px; }
-        .step h4 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 700; }
-        .step p { color: #666; font-size: 0.95rem; }
-        
-        /* What You Get */
-        .what-you-get { padding: 100px 0; background: #F9FAFB; }
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .feature { background: #fff; border-radius: 16px; padding: 32px; border: 1px solid #E5E5E5; }
-        .feature-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-        .feature-icon { font-size: 1.5rem; }
-        .feature-tag { background: #ECFDF5; color: #059669; font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 100px; }
-        .feature-tag.founder { background: #FEF3C7; color: #D97706; }
-        .feature h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-        .feature p { color: #666; font-size: 0.9rem; }
-        
-        /* Mentor */
-        .mentor { padding: 100px 0; }
-        .mentor-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .mentor-text h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 24px; }
-        .mentor-text p { color: #666; margin-bottom: 16px; font-size: 1.05rem; }
-        .mentor-stats { display: flex; gap: 40px; margin-top: 32px; }
-        .mentor-stat { text-align: center; }
-        .mentor-stat-num { font-size: 2.5rem; font-weight: 800; color: #4F46E5; }
-        .mentor-stat-label { color: #666; font-size: 0.875rem; }
-        .mentor-card { background: #000; color: #fff; border-radius: 24px; padding: 40px; }
-        .mentor-card h3 { font-size: 1.5rem; margin-bottom: 24px; }
-        .mentor-card p { color: #888; line-height: 1.8; }
-        
-        /* Pricing */
-        .pricing { padding: 100px 0; background: #F9FAFB; }
-        .pricing-card { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 32px; padding: 48px; text-align: center; border: 2px solid #000; }
-        .pricing-label { display: inline-block; background: #4F46E5; color: #fff; font-weight: 600; padding: 8px 16px; border-radius: 100px; font-size: 0.875rem; margin-bottom: 24px; }
-        .pricing-card h3 { font-size: 2rem; margin-bottom: 16px; font-weight: 700; }
-        .pricing-original { color: #999; text-decoration: line-through; font-size: 1.5rem; }
-        .pricing-price { font-size: 4rem; font-weight: 800; margin-bottom: 8px; }
-        .pricing-price span { font-size: 1.25rem; color: #666; font-weight: 500; }
-        .pricing-sub { color: #666; margin-bottom: 32px; }
-        .pricing-features { text-align: left; list-style: none; margin-bottom: 32px; }
-        .pricing-features li { padding: 12px 0; border-bottom: 1px solid #F3F4F6; display: flex; align-items: center; gap: 12px; }
-        .pricing-features li::before { content: "✓"; color: #10B981; font-weight: 700; }
-        .pricing-urgency { background: #FEF2F2; color: #DC2626; padding: 12px; border-radius: 8px; margin-bottom: 24px; font-weight: 600; }
-        .pricing-card .btn { width: 100%; padding: 20px; font-size: 1.2rem; }
-        .pricing-fine { color: #999; font-size: 0.875rem; margin-top: 16px; }
-        
-        /* Final CTA */
-        .final-cta { padding: 100px 0; background: #000; color: #fff; text-align: center; }
-        .final-cta h2 { font-size: 3rem; font-weight: 800; margin-bottom: 16px; }
-        .final-cta p { color: #888; font-size: 1.25rem; margin-bottom: 40px; }
-        .final-cta .domain-card { max-width: 500px; margin: 0 auto; }
-        
-        /* Footer */
-        footer { padding: 60px 0; background: #fff; border-top: 1px solid #E5E5E5; }
-        footer .container { display: flex; justify-content: space-between; align-items: center; }
-        .footer-tagline { color: #666; }
-        
-        @media (max-width: 768px) {
-            /* Navigation */
             nav { display: none; }
-            .logo { font-size: 1.2rem; }
-            
-            /* Sticky CTA for mobile */
-            .mobile-sticky-cta {
-                display: flex;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: #fff;
-                padding: 12px 16px;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-                z-index: 1000;
-                justify-content: center;
-                gap: 12px;
-            }
-            .mobile-sticky-cta .btn { flex: 1; max-width: 200px; text-align: center; }
-            
-            /* Hero - stack but keep compact */
-            .hero { padding: 40px 0 80px; }
-            .hero .container { grid-template-columns: 1fr; gap: 32px; }
-            .hero-badge { font-size: 0.75rem; padding: 6px 12px; }
-            .hero h1 { font-size: 2rem; line-height: 1.2; }
-            .hero-sub { font-size: 1rem; }
+            .mobile-nav { flex-direction: column; }
+            .hero .container { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 2rem; }
             .hero-ctas { flex-direction: column; }
             .hero-ctas .btn { width: 100%; text-align: center; }
-            .btn-large { padding: 14px 24px; font-size: 1rem; }
-            
-            /* Domain card - full width, compact */
-            .domain-card { padding: 24px; margin: 0 16px; }
-            .domain-card h3 { font-size: 1.25rem; }
-            .domain-card ul { font-size: 0.875rem; }
-            .domain-input-wrap { flex-wrap: wrap; }
-            .domain-input { font-size: 1rem !important; padding: 10px !important; }
-            
-            /* Stats - smaller */
-            .stats { padding: 40px 0; }
-            .stats-grid { grid-template-columns: 1fr; gap: 32px; }
-            .stat-num { font-size: 2rem; }
-            .stat-label { font-size: 0.875rem; }
-            
-            /* Sections - tighter padding */
-            .how-it-works, .what-you-get, .mentor, .pricing, .final-cta { padding: 60px 0; }
-            .section-title { font-size: 1.75rem; }
-            .section-sub { font-size: 1rem; }
-            
-            /* Steps - single column on mobile */
-            .steps-grid { grid-template-columns: 1fr; gap: 24px; }
-            .step { padding: 0; text-align: left; display: flex; gap: 16px; align-items: flex-start; }
-            .step-icon { width: 48px; height: 48px; font-size: 1.25rem; flex-shrink: 0; margin: 0; }
-            .step h4 { font-size: 1rem; }
-            .step p { font-size: 0.875rem; display: block; }
-            
-            /* Features - single column on mobile */
-            .features-grid { grid-template-columns: 1fr; gap: 16px; }
-            .feature { padding: 20px; }
-            .feature h4 { font-size: 1rem; }
-            .feature p { font-size: 0.875rem; display: block; }
-            .feature-tag { font-size: 0.7rem; padding: 4px 8px; }
-            
-            /* Mentor */
-            .mentor-content { grid-template-columns: 1fr; gap: 40px; }
-            .mentor-text h2 { font-size: 1.75rem; }
-            .mentor-stats { flex-wrap: wrap; gap: 20px; }
-            .mentor-stat { flex: 1; min-width: 80px; }
-            .mentor-stat-num { font-size: 1.75rem; }
-            .mentor-card { padding: 24px; }
-            .mentor-card p { font-size: 0.9rem; }
-            
-            /* Pricing */
-            .pricing-card { padding: 24px; }
-            .pricing-price { font-size: 2.5rem; }
-            .pricing-features { font-size: 0.9rem; }
-            .pricing-features li { padding: 12px 0; line-height: 1.5; }
-            
-            /* Final CTA */
-            .final-cta h2 { font-size: 2rem; }
-            .final-cta .domain-card { padding: 24px; }
-            
-            /* Footer */
-            footer { padding: 40px 0; }
-            footer .container { flex-direction: column; gap: 16px; text-align: center; }
-            
-            /* Hide sticky CTA on desktop */
-            .mobile-sticky-cta { display: none; }
+            .stats-grid { grid-template-columns: 1fr; gap: 24px; }
+            .stat-num { font-size: 2.2rem; }
+            .steps { grid-template-columns: 1fr; gap: 20px; }
+            .step { display: flex; gap: 16px; text-align: left; align-items: flex-start; }
+            .step-icon { margin: 0; flex-shrink: 0; }
+            .diff-content, .founder-content, .pricing-grid { grid-template-columns: 1fr; }
+            .founder-quote { padding: 24px; }
         }
     </style>
 </head>
@@ -234,22 +140,20 @@
     <header>
         <div class="container">
             <a href="/" class="logo"><span>🐾</span> Book My Walks</a>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('active')">
                 <span></span><span></span><span></span>
             </button>
             <nav>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#what-you-get">What You Get</a>
+                <a href="/walkers.html">Find Walkers</a>
+                <a href="#how">How It Works</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#faq">FAQ</a>
                 <a href="signup.html" class="btn btn-primary">Claim Your Spot</a>
             </nav>
             <div class="mobile-nav" id="mobileNav">
-                <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
-                <a href="#what-you-get" onclick="toggleMobileMenu()">What You Get</a>
-                <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
-                <a href="#faq" onclick="toggleMobileMenu()">FAQ</a>
-                <a href="signup.html" class="btn btn-primary" onclick="toggleMobileMenu()">Claim Your Spot</a>
+                <a href="/walkers.html" onclick="document.getElementById('mobileNav').classList.remove('active')">Find Walkers</a>
+                <a href="#how" onclick="document.getElementById('mobileNav').classList.remove('active')">How It Works</a>
+                <a href="#pricing" onclick="document.getElementById('mobileNav').classList.remove('active')">Pricing</a>
+                <a href="signup.html" class="btn btn-primary" onclick="document.getElementById('mobileNav').classList.remove('active')">Claim Your Spot</a>
             </div>
         </div>
     </header>
@@ -258,24 +162,27 @@
     <section class="hero">
         <div class="container">
             <div>
-                <div class="hero-badge">🐾 Skip the gig apps. Keep 100% of what you earn.</div>
-                <h1>Start Your Own Dog Walking Business.</h1>
-                <p class="hero-sub">Your booking page. Your prices. Your brand. No commission fees or gig app middleman — just a platform that helps you get set up, plus a mentor who's been doing this for 13 years.</p>
+                <div class="pill-label">🐾 Built by a walker who got tired of platform fees.</div>
+                <h1>Your business.<br>Your clients.<br>Your name on the door.</h1>
+                <p class="hero-sub">You didn't pay platform fees for years just to keep paying them. Book My Walks gives you your own booking page — your own link — so your clients book you directly. No commission. Just $19/month.</p>
                 <div class="hero-ctas">
-                    <a href="#pricing" class="btn btn-primary btn-large">Claim your founding member spot →</a>
-                    <a href="#how-it-works" class="btn btn-outline btn-large">See how it works</a>
+                    <a href="signup.html" class="btn btn-primary btn-large">Start Your Page →</a>
+                    <a href="#how" class="btn btn-outline btn-large">See How It Works</a>
                 </div>
             </div>
-            <div>
-                <div class="domain-card">
-                    <h3>Your page is waiting.</h3>
-                    <p>Type your name to test your booking page.</p>
-                    <div class="domain-input-wrap">
-                        <input type="text" class="domain-input" placeholder="yourname" id="heroUsername">
-                        <span class="domain-suffix">.bookmywalks.com</span>
-                    </div>
-                    <a href="preview.html" class="btn btn-primary" id="heroClaimBtn">Test My Page →</a>
+            <div class="url-card">
+                <h3>Your page is waiting.</h3>
+                <p>bookmywalks.com/walker/[yourname]</p>
+                <div class="url-preview">
+                    <input type="text" id="urlInput" placeholder="yourname" oninput="updatePreview()">
+                    <span class="url-suffix">/bookmywalks.com</span>
                 </div>
+                <a href="signup.html" class="btn btn-primary">Claim Your URL →</a>
+                <ul>
+                    <li>Your photo, your bio, your prices</li>
+                    <li>Clients book you — not whoever's available</li>
+                    <li>Keep 100% of every transaction</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -284,142 +191,77 @@
     <section class="stats">
         <div class="container">
             <div class="stats-grid">
-                <div class="stat">
-                    <div class="stat-num">$2,500–3,000</div>
-                    <div class="stat-label">Average monthly income for a full-time dog walker</div>
+                <div>
+                    <div class="stat-num">$19/mo</div>
+                    <div class="stat-label">Flat fee. No commission.</div>
                 </div>
-                <div class="stat">
-                    <div class="stat-num">$99</div>
-                    <div class="stat-label">Your entire first month — tools, page, and a strategy call</div>
+                <div>
+                    <div class="stat-num">100%</div>
+                    <div class="stat-label">Of every transaction stays yours</div>
                 </div>
-                <div class="stat">
-                    <div class="stat-num">13yrs</div>
-                    <div class="stat-label">Real industry experience behind every call and every feature</div>
+                <div>
+                    <div class="stat-num">0%</div>
+                    <div class="stat-label">Platform cut — ever</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
+    <section class="how" id="how">
         <div class="container">
-            <div class="section-label">The path forward</div>
-            <h2 class="section-title">From zero to booked in 30 days.</h2>
-            <p class="section-sub">You don't need experience. You don't need a business degree. You need a plan — and someone who's done it to walk you with you.</p>
-            
-            <div class="steps-grid">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">Four steps to owning your business.</div>
+            <div class="section-sub">No contracts. No hidden fees. No platform taking a cut of your income.</div>
+            <div class="steps">
                 <div class="step">
-                    <div class="step-icon">🔗</div>
-                    <h4>Claim your page</h4>
-                    <p>You get yourname.bookmywalks.com — a real, professional booking page that makes you look like you've been doing this for years.</p>
+                    <div class="step-icon">1️⃣</div>
+                    <h4>Sign up</h4>
+                    <p>Create your profile with your name, photo, bio, and prices. Takes 5 minutes.</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">📞</div>
-                    <h4>Book your first strategy call</h4>
-                    <p>One hour with a dog walking industry veteran. We cover your market, pricing, first clients, insurance — whatever you need.</p>
+                    <div class="step-icon">2️⃣</div>
+                    <h4>Get your link</h4>
+                    <p>Your own URL — bookmywalks.com/walker/[yourname]. Share it anywhere.</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">📬</div>
-                    <h4>Get support between calls</h4>
-                    <p>Questions don't wait for monthly calls. Email anytime and get a real answer within 48 hours.</p>
+                    <div class="step-icon">3️⃣</div>
+                    <h4>Clients find you</h4>
+                    <p>They search the directory or you send them your link directly.</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">🐕</div>
-                    <h4>Build your client base</h4>
-                    <p>Use your booking page and income tracker to grow. We'll help you get your first client, then your tenth.</p>
+                    <div class="step-icon">4️⃣</div>
+                    <h4>Keep what you earn</h4>
+                    <p>No commission. No cut. Just $19/month and your income stays yours.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- What You Get -->
-    <section class="what-you-get" id="what-you-get">
+    <!-- Different -->
+    <section class="diff">
         <div class="container">
-            <div class="section-label">Everything you need</div>
-            <h2 class="section-title">Your business. Ready to go.</h2>
-            <p class="section-sub">Not a course. Not a template. A complete setup built specifically for dog walkers — with a real person in your corner.</p>
-            
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-header">
-                        <span class="feature-icon">🔗</span>
-                        <span class="feature-tag">Included</span>
-                    </div>
-                    <h4>Your own booking page</h4>
-                    <p>yourname.bookmywalks.com. Professional, mobile-friendly, and live today. Clients book directly.</p>
+            <div class="diff-content">
+                <div class="diff-text">
+                    <h2>Other platforms are transactional. We're relational.</h2>
+                    <p>You know how it works on Rover, Wag, wherever. You get matched with whoever's available. The client never really knows who their walker is — and neither do you.</p>
+                    <p>Book My Walks is different. Your client books <em>you</em>. Every walk, they get the same person. Over time, you learn their dog — quirks, comfort zones, what makes them happy. And the dog learns you.</p>
+                    <p>That's not a feature. That's the whole point.</p>
                 </div>
-                <div class="feature">
-                    <div class="feature-header">
-                        <span class="feature-icon">📅</span>
-                        <span class="feature-tag">Included</span>
+                <div class="diff-card">
+                    <h3>The difference in practice:</h3>
+                    <div class="line">
+                        <div class="dash">—</div>
+                        <div class="line-text"><strong>Other platforms:</strong> You pay 20% every time a client books you. Forever. And the client isn't really yours.</div>
                     </div>
-                    <h4>Booking & scheduling</h4>
-                    <p>Smart calendar that blocks off booked times automatically. No double bookings.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-header">
-                        <span class="feature-icon">📰</span>
-                        <span class="feature-tag">Included</span>
+                    <div class="line">
+                        <div class="dash">—</div>
+                        <div class="line-text"><strong>Book My Walks:</strong> You pay $19/month flat. Clients are yours. Income is yours. No one takes a cut.</div>
                     </div>
-                    <h4>Client update emails</h4>
-                    <p>Send beautiful walk updates to pet parents. Builds loyalty without the work.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-header">
-                        <span class="feature-icon">📊</span>
-                        <span class="feature-tag">Included</span>
+                    <div class="line">
+                        <div class="dash">—</div>
+                        <div class="line-text"><strong>The real difference:</strong> You're not a gig worker here. You're a business owner.</div>
                     </div>
-                    <h4>Income tracker</h4>
-                    <p>Every walk logged. Export clean spreadsheets for taxes or proof of income.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-header">
-                        <span class="feature-icon">📞</span>
-                        <span class="feature-tag founder">Founding Members</span>
-                    </div>
-                    <h4>Monthly strategy call</h4>
-                    <p>One hour every month. Marketing, client recruitment, site design — whatever you need most.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-header">
-                        <span class="feature-icon">📬</span>
-                        <span class="feature-tag founder">Founding Members</span>
-                    </div>
-                    <h4>Async email support</h4>
-                    <p>Send questions anytime between calls. Real answers within 48 hours from someone with 13 years in the industry.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mentor -->
-    <section class="mentor" id="mentor">
-        <div class="container">
-            <div class="mentor-content">
-                <div class="mentor-text">
-                    <div class="section-label">Built by a walker, for walkers</div>
-                    <h2>You're not getting software.<br>You're getting a mentor.</h2>
-                    <p>I've been walking dogs professionally for 13 years. I built Bone Cadets — a premium dog walking service in San Francisco — from the ground up. Before that I was at William Morris Endeavor.</p>
-                    <p>I built Book My Walks because I wanted to make it dead simple for anyone to start a real dog walking business. Not a gig. Not a side hustle. A business with clients, income, and a future.</p>
-                    <p>When you join as a founding member you're not just getting a booking page. You're getting me — every month, for an hour, focused entirely on your business.</p>
-                    <div class="mentor-stats">
-                        <div class="mentor-stat">
-                            <div class="mentor-stat-num">13</div>
-                            <div class="mentor-stat-label">Years walking dogs professionally</div>
-                        </div>
-                        <div class="mentor-stat">
-                            <div class="mentor-stat-num">30</div>
-                            <div class="mentor-stat-label">Our goal: your first client within 30 days</div>
-                        </div>
-                        <div class="mentor-stat">
-                            <div class="mentor-stat-num">48hrs</div>
-                            <div class="mentor-stat-label">Email response guarantee</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mentor-card">
-                    <h3>Meet Your Mentor</h3>
-                    <p>"I was stuck in a corporate job I hated. Then I discovered dog walking — and it changed my life. Now I help others do the same. This isn't just about walking dogs. It's about building a life you don't need a vacation from."</p>
                 </div>
             </div>
         </div>
@@ -428,159 +270,76 @@
     <!-- Pricing -->
     <section class="pricing" id="pricing">
         <div class="container">
-            <div class="section-label">Simple pricing</div>
-            <h2 class="section-title">One plan. Everything included.</h2>
-            
-            <div class="pricing-card">
-                <span class="pricing-label">Founding Member</span>
-                <h3>Everything you need to launch</h3>
-                <div class="pricing-original">$249/month</div>
-                <div class="pricing-price">$99<span>/month</span></div>
-                <p class="pricing-sub">Only 10 spots at this price. Next 20 pay $149. Then $199.</p>
-                
-                <ul class="pricing-features">
-                    <li>Your own booking page at yourname.bookmywalks.com</li>
-                    <li>Booking & scheduling system</li>
-                    <li>Client update emails</li>
-                    <li>Income tracker spreadsheet — every walk logged, formulas built in</li>
-                    <li>1 hour monthly strategy call</li>
-                    <li>Async email support — replies within 48 hours</li>
-                    <li>Marketing & client recruitment guidance</li>
-                    <li>Insurance & licensing tips for your city</li>
-                    <li>Business card & site design help</li>
-                </ul>
-                
-                <div class="pricing-urgency" id="spotsRemaining">🔴 7 founding member spots remaining</div>
-                <a href="signup.html" class="btn btn-primary">Claim my spot for $99 →</a>
-                <p class="pricing-fine">Cancel anytime. No contracts. Price locks in for life as long as you stay subscribed.</p>
+            <div class="section-label">Pricing</div>
+            <div class="section-title">Simple. Honest. No surprises.</div>
+            <div class="section-sub">One flat fee. No commission. No hidden costs.</div>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="pc-label">Standard</div>
+                    <h3>Just the basics</h3>
+                    <div class="price">$19<span>/month</span></div>
+                    <div class="psub">Billed monthly. Cancel anytime.</div>
+                    <ul>
+                        <li>Your own booking page</li>
+                        <li>bookmywalks.com/walker/[yourname]</li>
+                        <li>Listed in the walker directory</li>
+                        <li>Direct payment (Venmo, Zelle, Cash)</li>
+                        <li>Client booking requests come to you</li>
+                    </ul>
+                    <a href="signup.html" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="price-card featured">
+                    <div class="pc-label">Launch Plan</div>
+                    <h3>Everything you need to start</h3>
+                    <div class="price">$19<span>/month</span></div>
+                    <div class="psub">One price. No upsells. No tiers.</div>
+                    <ul>
+                        <li>Everything in Standard</li>
+                        <li>Your booking page live in 5 minutes</li>
+                        <li>Unlimited service listings</li>
+                        <li>No commission — keep 100% of income</li>
+                        <li>Direct payments — no platform cut</li>
+                        <li>1-on-1 setup help if you need it</li>
+                    </ul>
+                    <a href="signup.html" class="btn btn-primary">Get Started →</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq" id="faq" style="padding: 100px 0; background: #fff;">
-        <div class="container" style="max-width: 800px;">
-            <div class="section-label">Questions?</div>
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            
-            <!-- Getting Started -->
-            <div style="margin-top: 48px;">
-                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; color: #4F46E5;">Getting started</h3>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Do I need experience to start?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">No. That's exactly why Book My Walks exists. We walk you through everything from your first client to your first $1,000 month.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">How much can I realistically make?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Full time dog walkers typically earn $2,500–$3,000 a month. Part time is $800–$1,200. It depends on your city, your rates, and how many clients you take on. We help you figure out the right number on your first call.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">How long until I get my first client?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Our goal is your first client within 30 days. Some walkers land one in the first week. It depends on how fast you move — we give you the exact playbook.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What do I need to get started?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">A phone, comfortable shoes, and a love for dogs. We handle the rest — your booking page, your business setup, your first client strategy.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Do I need to register a business or get insurance?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">It depends on your state. We cover both on your first strategy call. Insurance surprises most people — pet business liability typically runs $300–500 a year, which is less than most people pay for car insurance. We research the best options for your specific city.</div>
-                </details>
-            </div>
-            
-            <!-- About -->
-            <div style="margin-top: 48px;">
-                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; color: #4F46E5;">About Book My Walks</h3>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What do I get for $99 a month?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Your own booking page at yourname.bookmywalks.com, a booking and scheduling system, an income tracker spreadsheet with all the formulas built in, one hour strategy call every month, and email support with replies within 48 hours.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What happens on the monthly strategy call?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">One hour focused entirely on your business. Marketing, getting clients, pricing, insurance, business cards — whatever you need most that month. No agenda, no fluff. Just answers from someone who's done this for 13 years.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Can I cancel anytime?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Yes. No contracts, no cancellation fees. Your founding member price locks in for life as long as you stay subscribed.</div>
-                </details>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">Why is the founding member price so low?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">The first 10 members help shape the product. Your questions and feedback make Book My Walks better for everyone who comes after you. It's a fair trade — and your rate never changes.</div>
-                </details>
-            </div>
-            
-            <!-- What We Don't Handle -->
-            <div style="margin-top: 48px;">
-                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; color: #4F46E5;">What Book My Walks doesn't handle</h3>
-                
-                <details style="margin-bottom: 12px; border: 1px solid #E5E5E5; border-radius: 12px; overflow: hidden;">
-                    <summary style="padding: 20px; cursor: pointer; font-weight: 600; background: #F9FAFB;">What doesn't Book My Walks cover?</summary>
-                    <div style="padding: 20px; color: #666; border-top: 1px solid #E5E5E5;">Three things — taxes, insurance, and client payments. We give you an income tracker spreadsheet that makes tax time simple, but we're not accountants. We don't provide insurance but we help you find affordable coverage on your first call. And you collect payments directly from clients however works for you — Venmo, Zelle, cash, whatever. We never touch your money and we never take a cut.</div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="final-cta">
+    <!-- Founder Note -->
+    <section class="founder">
         <div class="container">
-            <h2>Your business starts<br>with one walk.</h2>
-            <p>Claim your founding member spot today. Your booking page goes live once your account is set up.</p>
-            <a href="#pricing" class="btn btn-primary btn-large">Get Started →</a>
-            <p style="color: #666; margin-top: 24px; font-size: 0.875rem;">or <a href="preview.html" style="color: #4F46E5; text-decoration: underline;">test your page first →</a></p>
+            <div class="founder-content">
+                <div class="founder-text">
+                    <h2>I paid platform fees for 13 years.</h2>
+                    <p>I know what it's like to build a client base, work hard, and then watch the platform take a cut of every single transaction. Year after year.</p>
+                    <p>Book My Walks is what I wish existed when I started. No commission. No middleman. Just a simple tool that helps you get your own business in front of your clients — on your terms.</p>
+                    <p>The robots still can't walk your dog. AI can't replace real care. That's our advantage — and yours.</p>
+                </div>
+                <div class="founder-quote">
+                    <div class="fq-text">The best walker isn't whoever's closest on an app. It's whoever shows up every week and knows your dog. That's who we build for.</div>
+                    <div class="fq-attr">— Erica, Founder</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <a href="/" class="logo"><span>🐾</span> Book My Walks</a>
-            <p class="footer-tagline">Start walking dogs without a leash on yourself.</p>
-            <p style="color: #999; font-size: 0.875rem;">© 2026 Book My Walks. Built for dog walkers, by dog walkers.</p>
+            <a href="/walkers.html">Find Walkers</a> &nbsp;|&nbsp;
+            <a href="/signup.html">For Walkers</a> &nbsp;|&nbsp;
+            <a href="/dashboard.html">Dashboard</a>
+            <br><br>
+            Funny how the robots still can't walk your dog. 🐾
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            document.getElementById('mobileNav').classList.toggle('active');
-        }
-        
-        // Handle username input → preview button
-        function updatePreviewLink() {
-            const heroInput = document.getElementById('heroUsername');
-            const footerInput = document.getElementById('footerUsername');
-            const username = heroInput?.value?.trim() || footerInput?.value?.trim() || '';
-            
-            const heroBtn = document.getElementById('heroClaimBtn');
-            
-            if (heroBtn) {
-                heroBtn.href = 'preview.html' + (username ? '?u=' + encodeURIComponent(username.toLowerCase()) : '');
-            }
-        }
-        
-        document.getElementById('heroUsername')?.addEventListener('input', updatePreviewLink);
-        document.getElementById('footerUsername')?.addEventListenerListener('input', updatePreviewLink);
-            // Set remaining spots (would come from backend in production)
-        const spotsEl = document.getElementById("spotsRemaining");
-        if (spotsEl) {
-            const spots = Math.floor(Math.random() * 6) + 5;
-            spotsEl.textContent = "🔴 " + spots + " founding member spots remaining";
+        function updatePreview() {
+            // URL preview is visual only — the actual routing is path-based
         }
     </script>
-    
-    <!-- Mobile Sticky CTA -->
-    <div class="mobile-sticky-cta">
-        <a href="#pricing" class="btn btn-primary">Claim My Spot →</a>
-    </div>
 </body>
 </html>
