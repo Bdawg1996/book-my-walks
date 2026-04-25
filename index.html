@@ -106,7 +106,12 @@
         .faq-grid { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
         .faq-item { background: #fff; border-radius: 16px; padding: 24px; border: 1px solid #E5E5E5; }
         .faq-q { font-weight: 700; font-size: 1.05rem; color: #1B4332; margin-bottom: 10px; }
-        .faq-a { color: #555; font-size: 0.95rem; line-height: 1.65; }
+        .faq-a { color: #555; font-size: 0.95rem; line-height: 1.65; display: none; padding-top: 8px; }
+        .faq-item.open .faq-a { display: block; }
+        .faq-item { cursor: pointer; position: relative; }
+        .faq-item::after { content: '▼'; position: absolute; right: 20px; top: 22px; font-size: 0.75rem; color: #1B4332; transition: transform 0.2s; }
+        .faq-item.open::after { transform: rotate(180deg); }
+        .faq-q { font-weight: 700; font-size: 1.05rem; color: #1B4332; margin-bottom: 0; padding-right: 24px; }
 
         /* Founder Note */
         .founder { padding: 80px 0; }
@@ -316,39 +321,39 @@
         <div class="container">
             <div class="faq-title">Frequently Asked Questions</div>
             <div class="faq-grid">
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">Do I need experience to start?</div>
                     <div class="faq-a">No. That's exactly why Book My Walks exists. We'll walk you through everything and help you build confidence in the brand you're creating — from your first client to a thriving business.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">How much can I realistically make?</div>
                     <div class="faq-a">It depends largely on your area, but full-time dog walkers can earn $3,000–5,000+ a month. We help you understand your local market and set the right rates.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">How long until I get my first client?</div>
                     <div class="faq-a">Many walkers land their first client within the first week. It depends on how fast you move using the playbook we provide.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What do I need to get started?</div>
                     <div class="faq-a">A genuine love for dogs, a professional mindset, and the drive to build something of your own. We help you handle the rest.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What do I get for $249 a month?</div>
                     <div class="faq-a">Your own booking page at bookmywalks.com/yourbusinessname, a booking and scheduling system, income tracking tools, weekly group calls, up to one hour one-on-one with Brandon monthly, and email support with replies within 24 hours.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What happens on the monthly one-on-one?</div>
                     <div class="faq-a">Up to one hour focused entirely on your business. Marketing, getting clients, pricing, business structure, backend setup — whatever you need most that month. No fluff, just answers.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">Can I cancel anytime?</div>
                     <div class="faq-a">Yes. Cancel anytime.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What doesn't Book My Walks handle?</div>
                     <div class="faq-a">Three things — taxes, insurance, and client payments. We don't provide insurance but we help you find the right coverage — most people are surprised, pet business liability typically runs around $200 a year. We give you the tools you need to track your income but we're not accountants. You collect payments directly from clients however works for you — Venmo, Zelle, cash. We never touch your money and never take a cut.</div>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What's the custom domain option?</div>
                     <div class="faq-a">As your business grows you can upgrade to your own custom domain. Your page moves from bookmywalks.com/brandysdogs to brandysdogs.com — same page, same clients, just your own address on the door. Ask us about it when you're ready.</div>
                 </div>
@@ -356,7 +361,12 @@
         </div>
     </section>
 
-    <!-- Founder Note -->
+    <script>
+        function toggleFaq(el) {
+            el.classList.toggle('open');
+        }
+    </script>
+</body>
     <section class="founder">
         <div class="container">
             <div class="founder-content">
