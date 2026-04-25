@@ -83,7 +83,7 @@
         <div id="upgradeCard" class="upgrade-card">
             <h2>Make your page live.</h2>
             <p>You're on a free preview. Upgrade to activate your page and start getting clients.</p>
-            <div class="price">$19<span>/month</span></div>
+            <div class="price">$249<span>/month</span></div>
             <p style="color:#B7D9C0; font-size:0.85rem; margin-top:8px;">Flat fee. No commission. No contracts.</p>
             <a href="#" class="upgrade-btn" id="upgradeBtn">Activate My Page →</a>
         </div>
@@ -207,7 +207,7 @@
         }
 
         async function activateAccount(w) {
-            if (!confirm('Activate your page for $19/month? You\'ll be listed in the public directory.')) return;
+            if (!confirm('Activate your page for $249/month? You\'ll be listed in the public directory.')) return;
             const { error } = await supabaseClient
                 .from('walker_profiles')
                 .update({ status: 'active' })
