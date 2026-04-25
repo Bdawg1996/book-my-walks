@@ -303,16 +303,13 @@
         
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Get username from subdomain or URL
-        const hostname = window.location.hostname;
+        // Get username from URL path (e.g., bookmywalks.com/walker/johndoe)
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
         let username = null;
         
-        if (hostname.includes('bookmywalks.com')) {
-            // Extract subdomain (e.g., "bobby" from "bobby.bookmywalks.com")
-            const parts = hostname.split('.');
-            if (parts.length > 2 && parts[0] !== 'www') {
-                username = parts[0];
-            }
+        // Format: /walker/username
+        if (pathParts.length >= 2 && pathParts[0] === 'walker') {
+            username = pathParts[1];
         }
         
         // Fallback to query param ?u=username
